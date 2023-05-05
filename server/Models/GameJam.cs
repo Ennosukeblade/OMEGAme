@@ -14,8 +14,7 @@ public class GameJam
     [Required]
     public string Description { get; set; }
     
-    [Required]
-    public string Reward { get; set; }
+
     
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
@@ -24,6 +23,8 @@ public class GameJam
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
     // * GameJam have InGameJam 
+    public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
+    // * Reward in GameJam
     public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
 
 }

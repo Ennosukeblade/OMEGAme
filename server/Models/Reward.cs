@@ -10,6 +10,10 @@ public class Reward
     // Navigation Property : creator
     public User? Creator { get; set; }
     [Required]
+    public int GameJamId { get; set; }
+    // Navigation Property : creator
+    public GameJam? GameJam { get; set; }
+    [Required]
     public string RewardPrice { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
