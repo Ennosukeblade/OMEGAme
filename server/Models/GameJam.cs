@@ -25,6 +25,6 @@ public class GameJam
     // * GameJam have InGameJam 
     public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
     // * Reward in GameJam
-    public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
+    public List<Reward> RewardInGameJam {get;set;} = new List<Reward>();
 
 }

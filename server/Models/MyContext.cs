@@ -19,6 +19,6 @@ public class MyContext : DbContext
     public DbSet<Image> Images { get; set; }
     public DbSet<InGameJam> InGameJams { get; set; }
     public DbSet<Reward> Rewards { get; set; }
-    public DbSet<User> Games { get; set; }
+    
     public DbSet<Vote> Votes { get; set; }
 }
