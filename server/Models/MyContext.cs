@@ -10,7 +10,7 @@ public class MyContext : DbContext
 {
     public MyContext(DbContextOptions options) : base(options) { }
     // the "Monsters" table name will come from the DbSet property name
-    public DbSet<Asset> Asset { get; set; }
+    public DbSet<Asset> Assets { get; set; }
     public DbSet<AssetComment> AssetComments { get; set; }
     public DbSet<AssetImage> AssetImages { get; set; }
     public DbSet<Comment> Comments { get; set; }
@@ -19,6 +19,6 @@ public class MyContext : DbContext
     public DbSet<Image> Images { get; set; }
     public DbSet<InGameJam> InGameJams { get; set; }
     public DbSet<Reward> Rewards { get; set; }
-    
+    public DbSet<User> Users { get; set; }
     public DbSet<Vote> Votes { get; set; }
 }

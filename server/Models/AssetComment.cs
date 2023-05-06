@@ -5,7 +5,7 @@ namespace server.Models;
 public class AssetComment
 {
     [Key]
-    public int CommentId { get; set; }
+    public int AssetCommentId { get; set; }
     [Required]
     public int UserId { get; set; }
     public User? User { get; set; }

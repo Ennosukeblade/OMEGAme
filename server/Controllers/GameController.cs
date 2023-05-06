@@ -24,16 +24,25 @@ namespace server.Controllers
         {
             return await _context.Games.ToListAsync();
         }
-
-        // // POST: api/TodoItems
-        // [HttpPost]
-        // public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem item)
-        // {
-        //     _context.TodoItems.Add(item);
-        //     await _context.SaveChangesAsync();
-
-        //     return CreatedAtAction(nameof(GetTodoItem), new { id = item.Id }, item);
-        // }
+        //* GET: api/Game/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Game>> GetGameById(int id)
+        {
+            var game = await _context.Games.FindAsync(id);
+            if (game == null)
+            {
+                return NotFound();
+            }
+            return game;
+        }
+        //* POST: api/CreateGame
+        [HttpPost]
+        public async Task<ActionResult<Game>> CreateGame(Game NewGame)
+        {
+            _context.Games.Add(NewGame);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame);
+        }
 
         // PUT: api/TodoItems/5
         //[HttpPut("{id}")]
