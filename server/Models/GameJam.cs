@@ -1,27 +1,30 @@
 #pragma warning disable CS8618
 using System.ComponentModel.DataAnnotations;
 namespace server.Models;
-public class Game
+public class GameJam
 {
     [Key]
-    public int GameId { get; set; }
+    public int GameJamId { get; set; }
     [Required]
     public int UserId { get; set; }
     // Navigation Property : creator
     public User? Creator { get; set; }
     [Required]
     public string Title { get; set; }
-    public string Genre { get; set; }
-    public string Path { get; set; }
-    [Required]
-    public double Price { get; set; } = 0.0;
     [Required]
     public string Description { get; set; }
+    
 
+    
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public DateTime VotingEndDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
-    // * Comments In Game 
-    public List<Comment> MyComments {get;set;} = new List<Comment>();
-    // *  Game In GameJam 
-    public List<InGameJam> GameInGameJams {get;set;} = new List<InGameJam>();
+
+    // * GameJam have InGameJam 
+    public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
+    // * Reward in GameJam
+    public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
+
 }

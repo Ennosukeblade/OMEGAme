@@ -1,10 +1,10 @@
 #pragma warning disable CS8618
 using System.ComponentModel.DataAnnotations;
 namespace server.Models;
-public class Game
+public class Asset
 {
     [Key]
-    public int GameId { get; set; }
+    public int AssetId { get; set; }
     [Required]
     public int UserId { get; set; }
     // Navigation Property : creator
@@ -20,8 +20,8 @@ public class Game
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
-    // * Comments In Game 
-    public List<Comment> MyComments {get;set;} = new List<Comment>();
-    // *  Game In GameJam 
-    public List<InGameJam> GameInGameJams {get;set;} = new List<InGameJam>();
+    // * Comments In Asset 
+    public List<AssetComment> MyComments {get;set;} = new List<AssetComment>();
+    // * Assets have Images
+    public List<AssetImage> AssetImages {get;set;} = new List<AssetImage>();
 }
