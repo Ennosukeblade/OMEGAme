@@ -42,5 +42,20 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(AssetImage), new { id = NewAssetImage.AssetImageId }, NewAssetImage);
         }
+        //* DELETE: api/AssetImage/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAssetImage(int id)
+        {
+            var assetImage = await _context.AssetImages.FindAsync(id);
+            if (assetImage == null)
+            {
+                return NotFound();
+            }
+
+            _context.AssetImages.Remove(assetImage);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

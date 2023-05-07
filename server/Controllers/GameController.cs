@@ -60,20 +60,20 @@ namespace server.Controllers
         //     return NoContent();
         // }
 
-        // DELETE: api/TodoItems/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> DeleteTodoItem(int id)
-        // {
-        //     var todoItem = await _context.TodoItems.FindAsync(id);
-        //     if (todoItem == null)
-        //     {
-        //         return NotFound();
-        //     }
+        //* DELETE: api/Game/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGame(int id)
+        {
+            var game = await _context.Games.FindAsync(id);
+            if (game == null)
+            {
+                return NotFound();
+            }
 
-        //     _context.TodoItems.Remove(todoItem);
-        //     await _context.SaveChangesAsync();
+            _context.Games.Remove(game);
+            await _context.SaveChangesAsync();
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
     }
 }

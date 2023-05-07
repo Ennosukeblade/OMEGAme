@@ -42,5 +42,20 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Comment), new { id = NewComment.CommentId }, NewComment);
         }
+        //* DELETE: api/Comment/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
