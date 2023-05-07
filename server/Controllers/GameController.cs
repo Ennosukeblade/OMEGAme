@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO.Compression;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using server.Models;
 
@@ -64,7 +65,7 @@ namespace server.Controllers
         // }
         // //* POST: api/Game
         [HttpPost("upload/{id}")]
-        public async Task<IActionResult> UploadFile(IFormFile file,int id)
+        public async Task<IActionResult> UploadFile(IFormFile file, int id)
         {
             if (file == null || file.Length == 0)
             {
@@ -116,7 +117,10 @@ namespace server.Controllers
             {
                 return NotFound();
             }
-
+            if (Directory.Exists(game.Path))
+            {
+                Directory.Delete(game.Path, true);
+            }
             _context.Games.Remove(game);
             await _context.SaveChangesAsync();
 
