@@ -35,6 +35,7 @@ namespace server.Controllers
             }
             return game;
         }
+        
         //* POST: api/CreateGame
         [HttpPost]
         public async Task<ActionResult<Game>> CreateGame(Game NewGame)
