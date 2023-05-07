@@ -11,8 +11,9 @@ public class Game
     public User? Creator { get; set; }
     [Required]
     public string Title { get; set; }
+    [Required]
     public string Genre { get; set; }
-    public string Path { get; set; }
+    public string Path { get; set; } 
     [Required]
     public double Price { get; set; } = 0.0;
     [Required]
