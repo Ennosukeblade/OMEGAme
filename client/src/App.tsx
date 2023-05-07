@@ -1,14 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-// import NavBar from './components/Navbar';
+import NavBar from './components/Navbar';
 import Games from './pages/Games';
+//import 'bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-      {/* <NavBar/> */}
-      <Games/>
+      <NavBar />
+      <h1>hello</h1>
+      <Games />
+
     </div>
   );
 }
