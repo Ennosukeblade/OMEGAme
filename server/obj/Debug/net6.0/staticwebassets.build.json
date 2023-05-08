@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "wHmTdzQjOI+52yc/ssik8jb3aBon0KdSXd8S7aZ3iSw=",
+  "Hash": "Awi+HPX1J2Pm5zLNb2TqPX0IaTRP+GOx3h1QUa3mItQ=",
   "Source": "server",
   "BasePath": "_content/server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "server\\wwwroot",
+      "Source": "server",
+      "ContentRoot": "E:\\OMEGAme\\server\\wwwroot\\",
+      "BasePath": "_content/server",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

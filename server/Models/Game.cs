@@ -27,4 +27,7 @@ public class Game
     public List<Comment> MyComments {get;set;} = new List<Comment>();
     // *  Game In GameJam 
     public List<InGameJam> GameInGameJams {get;set;} = new List<InGameJam>();
+    // *  Game Have images
+    public List<Image> MyImages {get;set;} = new List<Image>();
+
 }

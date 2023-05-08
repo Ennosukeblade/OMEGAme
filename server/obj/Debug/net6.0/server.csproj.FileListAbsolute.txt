@@ -101,3 +101,4 @@ E:\OMEGAme\server\obj\Debug\net6.0\refint\server.dll
 E:\OMEGAme\server\obj\Debug\net6.0\server.pdb
 E:\OMEGAme\server\obj\Debug\net6.0\server.genruntimeconfig.cache
 E:\OMEGAme\server\obj\Debug\net6.0\ref\server.dll
+E:\OMEGAme\server\bin\Debug\net6.0\server.staticwebassets.runtime.json

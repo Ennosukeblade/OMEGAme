@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using server.Models;
+using Microsoft.VisualBasic.FileIO;
 
 namespace server.Controllers
 {
@@ -56,21 +57,18 @@ namespace server.Controllers
         //     return File(fileBytes, contentType);
         // }
         // //* POST: api/CreateGame
-        // [HttpPost]
-        // public async Task<ActionResult<Game>> CreateGame(Game NewGame)
-        // {
-        //     _context.Games.Add(NewGame);
-        //     await _context.SaveChangesAsync();
-        //     return CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame);
-        // }
-        // //* POST: api/Game
-        [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile(IFormFile file, Game newGame)
+        [HttpPost]
+        public async Task<ActionResult<Game>> CreateGame(Game NewGame)
         {
-            // Add
-            _context.Add(newGame);
-            // Save
+            _context.Games.Add(NewGame);
             await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame);
+        }
+        // //* POST: api/Game
+        [HttpPost("upload/{id}")]
+        public async Task<IActionResult> UploadFile(IFormFile file, int id)
+        {
+            Game? newGame = await _context.Games.FindAsync(id);
 
             if (file == null || file.Length == 0)
             {
@@ -80,26 +78,26 @@ namespace server.Controllers
             // Uncompress the file
             using var stream = new MemoryStream();
             await file.CopyToAsync(stream);
+            var fileName = Path.GetFileNameWithoutExtension(file.FileName);
             using var archive = new ZipArchive(stream);
             var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
             archive.ExtractToDirectory(extractionPath);
+            var directoryName = new DirectoryInfo(extractionPath).GetDirectories().FirstOrDefault()?.Name;
 
             // Rename the folder
-            var gameId = newGame.GameId.ToString();
-            var folderName = $"{gameId}";
-            var oldPath = Path.Combine(extractionPath, "Games");
+
+            var folderName = $"{id}";
+            var oldPath = Path.Combine(extractionPath, directoryName);
+            FileSystem.RenameDirectory(oldPath, folderName);
             var newPath = Path.Combine(extractionPath, folderName);
-            Directory.CreateDirectory(newPath); // create the destination directory
-            Directory.Move(oldPath, newPath);
             newGame.Path = newPath;
-
-
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");
             if (indexHtmlPath != null)
             {
                 newGame.isPlayable = true;
             }
+            await _context.SaveChangesAsync();
             return Ok();
             //* return File(System.IO.File.ReadAllBytes(indexHtmlPath), "text/html");
         }
