@@ -15,9 +15,11 @@ public class Game
     public string Genre { get; set; }
     public string Path { get; set; } 
     [Required]
+    [Range(0.00,int.MaxValue)]
     public double Price { get; set; } = 0.0;
     [Required]
     public string Description { get; set; }
+    public bool isPlayable { get; set; }=false;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;

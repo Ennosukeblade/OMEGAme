@@ -41,20 +41,20 @@ namespace server.Controllers
             }
             return game;
         }
-        [HttpGet("{id}")]
-        public IActionResult GetFile(string id)
-        {
-            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "AllGames", id, "index.html");
+        // [HttpGet("{id}")]
+        // public IActionResult GetFile(string id)
+        // {
+        //     var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "AllGames", id, "index.html");
 
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound();
-            }
+        //     if (!System.IO.File.Exists(filePath))
+        //     {
+        //         return NotFound();
+        //     }
 
-            var fileBytes = System.IO.File.ReadAllBytes(filePath);
-            var contentType = "text/html";
-            return File(fileBytes, contentType);
-        }
+        //     var fileBytes = System.IO.File.ReadAllBytes(filePath);
+        //     var contentType = "text/html";
+        //     return File(fileBytes, contentType);
+        // }
         // //* POST: api/CreateGame
         // [HttpPost]
         // public async Task<ActionResult<Game>> CreateGame(Game NewGame)
@@ -64,9 +64,14 @@ namespace server.Controllers
         //     return CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame);
         // }
         // //* POST: api/Game
-        [HttpPost("upload/{id}")]
-        public async Task<IActionResult> UploadFile(IFormFile file, int id)
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadFile(IFormFile file, Game newGame)
         {
+            // Add
+            _context.Add(newGame);
+            // Save
+            await _context.SaveChangesAsync();
+
             if (file == null || file.Length == 0)
             {
                 return BadRequest("Please provide a file");
@@ -80,14 +85,17 @@ namespace server.Controllers
             archive.ExtractToDirectory(extractionPath);
 
             // Rename the folder
-            var gameId = id.ToString();
+            var gameId = newGame.GameId.ToString();
             var folderName = $"{gameId}";
-            var oldPath = Path.Combine(extractionPath, "original_folder_name");
+            var oldPath = Path.Combine(extractionPath, "Games");
             var newPath = Path.Combine(extractionPath, folderName);
             Directory.Move(oldPath, newPath);
+            newGame.Path = newPath;
+
 
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");
+
             return Ok();
             //* return File(System.IO.File.ReadAllBytes(indexHtmlPath), "text/html");
         }
