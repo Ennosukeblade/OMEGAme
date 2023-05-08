@@ -182,6 +182,9 @@ namespace server.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isPlayable")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("GameId");
 
                     b.HasIndex("UserId");
