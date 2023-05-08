@@ -89,13 +89,17 @@ namespace server.Controllers
             var folderName = $"{gameId}";
             var oldPath = Path.Combine(extractionPath, "Games");
             var newPath = Path.Combine(extractionPath, folderName);
+            Directory.CreateDirectory(newPath); // create the destination directory
             Directory.Move(oldPath, newPath);
             newGame.Path = newPath;
 
 
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");
-
+            if (indexHtmlPath != null)
+            {
+                newGame.isPlayable = true;
+            }
             return Ok();
             //* return File(System.IO.File.ReadAllBytes(indexHtmlPath), "text/html");
         }
