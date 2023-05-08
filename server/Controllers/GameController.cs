@@ -62,7 +62,7 @@ namespace server.Controllers
         {
             _context.Games.Add(NewGame);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame);
+            return StatusCode(200,CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame));
         }
         // //* POST: api/Game
         [HttpPost("upload/{id}")]
