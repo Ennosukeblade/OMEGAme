@@ -12,7 +12,7 @@ type gameCardTypes = {
 const GameCard2 = ({ title, image, author, avatar, description, badges, os }: gameCardTypes) => {
     return (
         <>
-            <div className="max-w-sm rounded overflow-hidden shadow">
+            <div className="max-w-sm rounded overflow-hidden shadow-xl">
                 <img className="w-full" src={image} alt={title} />
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{title}</div>
@@ -34,29 +34,24 @@ const GameCard2 = ({ title, image, author, avatar, description, badges, os }: ga
                         ))
                     }
                 </div>
-                <div className="px-6 pb-2">
+                <div className="px-6 pb-4 flex items-center gap-x-3">
                     {
                         os.map(o => {
                             switch (o) {
                                 case "windows":
                                     return (
-                                        <span className="inline-block gap-2">
-                                            <img src={require("../assets/icons/windows.png")} alt="" width="24" />
-                                        </span>
+                                        <img src={require("../assets/icons/windows.png")} alt="" width="24" />
                                     )
-
-
                                 case "android":
                                     return (
-                                        <span className="inline-block">
-                                            <img src={require("../assets/icons/android.png")} alt="" width="24" />
-                                        </span>
+                                        <img src={require("../assets/icons/android.png")} alt="" width="24" />
                                     )
                                 case "inBrowser":
                                     return (
-                                        <span className="inline-block gap-2">
+                                        <>
                                             <img src={require("../assets/icons/browser.png")} alt="" width="24" />
-                                        </span>
+                                            <p className='text-sm'>Play in browser</p>
+                                        </>
                                     )
                                 default:
                                     break;
