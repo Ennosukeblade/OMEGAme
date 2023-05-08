@@ -80,12 +80,6 @@ const Games = () => {
     console.log("game");
     return (
         <div className="container mx-auto px-4">
-            <GameCard />
-            <GameCard />
-            <GameCard />
-            <GameCard />
-            <GameCard />
-            <GameCard />
             <div className="grid gap-3 grid-cols-3">
                 {game.map((g: Icard) => (
                     <GameCard2
