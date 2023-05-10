@@ -35,12 +35,35 @@ namespace server.Controllers
             return AssetImage;
         }
         //* POST: api/AssetImage
-        [HttpPost]
-        public async Task<ActionResult<AssetImage>> CreateAssetImage(AssetImage NewAssetImage)
+        [HttpPost("upload/{id}")]
+        public async Task<ActionResult<AssetImage>> CreateAssetImage(IFormFile image, int id)
         {
-            _context.AssetImages.Add(NewAssetImage);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(AssetImage), new { id = NewAssetImage.AssetImageId }, NewAssetImage);
+            Asset? Asset = await _context.Assets.FindAsync(id);
+
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif",".webp" }; // Add more if needed
+            var extension = Path.GetExtension(image.FileName).ToLower();
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest("Invalid file type. Allowed file types are: " + string.Join(", ", allowedExtensions));
+            }
+            if (image != null && image.Length > 0)
+            {
+                var fileName = Path.GetFileName(image.FileName);
+                var filePath = Path.Combine("wwwroot", "ModelAssets",Asset.AssetId.ToString(),"images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+                var NewAssetImage = new AssetImage { AssetId = Asset.AssetId, FileName = filePath };
+                _context.AssetImages.Add(NewAssetImage);
+                await _context.SaveChangesAsync();
+                return  CreatedAtAction(nameof(AssetImage), new { id = NewAssetImage.AssetImageId }, NewAssetImage);
+            }
+
+            return BadRequest("No image was uploaded");
+
         }
         //* DELETE: api/AssetImage/5
         [HttpDelete("{id}")]

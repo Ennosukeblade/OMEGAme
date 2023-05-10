@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\ModelAssets\\1\\Rocket.blend"
     },
     {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\ModelAssets\\1\\images\\pen-rocket-pen.jpg",
+      "PackagePath": "staticwebassets\\ModelAssets\\1\\images\\pen-rocket-pen.jpg"
+    },
+    {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\19\\MonoBleedingEdge\\EmbedRuntime\\MonoPosixHelper.dll",
       "PackagePath": "staticwebassets\\uploads\\19\\MonoBleedingEdge\\EmbedRuntime\\MonoPosixHelper.dll"
     },
@@ -1383,6 +1387,18 @@
     {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\dependencies.txt",
       "PackagePath": "staticwebassets\\uploads\\22\\dependencies.txt"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\images\\2347f5_2e980ab6755047ef8ff4ce9693e32fbe_mv2.gif",
+      "PackagePath": "staticwebassets\\uploads\\22\\images\\2347f5_2e980ab6755047ef8ff4ce9693e32fbe_mv2.gif"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\images\\cartoon_car_drawing_tutorial.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\images\\cartoon_car_drawing_tutorial.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\images\\pen-rocket-pen.jpg",
+      "PackagePath": "staticwebassets\\uploads\\22\\images\\pen-rocket-pen.jpg"
     },
     {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\index.html",

@@ -55,10 +55,9 @@ namespace server.Controllers
                     await image.CopyToAsync(fileStream);
                 }
                 var NewImage = new Image { GameId = Game.GameId, FileName = filePath };
-                NewImage.FileName = filePath;
                 _context.Images.Add(NewImage);
                 await _context.SaveChangesAsync();
-                return StatusCode(200, CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage));
+                return  CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage);
             }
 
             return BadRequest("No image was uploaded");
