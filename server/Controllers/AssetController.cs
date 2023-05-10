@@ -10,7 +10,7 @@ namespace server.Controllers
     [ApiController]
     public class AssetController : ControllerBase
     {
-         private readonly MyContext _context;
+        private readonly MyContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
         public AssetController(MyContext context, IWebHostEnvironment hostingEnvironment)
@@ -41,11 +41,10 @@ namespace server.Controllers
         {
             _context.Assets.Add(NewAsset);
             await _context.SaveChangesAsync();
-            return StatusCode(200,CreatedAtAction(nameof(Asset), new { id = NewAsset.AssetId }, NewAsset));
+            return StatusCode(200, CreatedAtAction(nameof(Asset), new { id = NewAsset.AssetId }, NewAsset));
         }
-        // //* POST: api/Game
         [HttpPost("upload/{id}")]
-        public async Task<IActionResult> UploadFile(IFormFile file, int id)
+        public async Task<IActionResult> UploadAsset(IFormFile file, int id)
         {
             Asset? newAsset = await _context.Assets.FindAsync(id);
 
@@ -54,32 +53,36 @@ namespace server.Controllers
                 return BadRequest("Please provide a file");
             }
 
-            // Uncompress the file
-            using var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
-            var fileName = Path.GetFileNameWithoutExtension(file.FileName);
-            using var archive = new ZipArchive(stream);
-            var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "ModelAssets");
-            archive.ExtractToDirectory(extractionPath);
+            var folderName = $"{id}";
+            var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "ModelAssets", folderName);
+            Directory.CreateDirectory(extractionPath);
+            var filePath = Path.Combine(extractionPath, file.FileName); // Generate the file path
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            
+
             var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
 
-            // Rename the folder
-            var folderName = $"{id}";
-            var oldPath = Path.Combine(extractionPath, directoryName);
-            FileSystem.RenameDirectory(oldPath, folderName);
-            System.Console.WriteLine(oldPath);
+            Directory.CreateDirectory(Path.Combine(extractionPath, "images"));
+            newAsset.Path = Path.Combine(extractionPath, directoryName);
 
-            //* Update Game
-            var newPath = Path.Combine(extractionPath, folderName);
-            Directory.CreateDirectory(Path.Combine(newPath,"images"));
-            newAsset.Path = newPath;
-            // Find the index.html file
             await _context.SaveChangesAsync();
+
             return Ok();
-            //* return File(System.IO.File.ReadAllBytes(indexHtmlPath), "text/html");
         }
+        
+
+
+
+
+
+
         //* DELETE: api/Asset/5
-        [HttpDelete("{id}")]
+                [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsset(int id)
         {
             var asset = await _context.Assets.FindAsync(id);
