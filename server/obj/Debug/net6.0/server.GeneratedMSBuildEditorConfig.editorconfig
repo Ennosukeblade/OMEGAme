@@ -5,12 +5,21 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = server
 build_property.RootNamespace = server
+<<<<<<< HEAD
 build_property.ProjectDir = D:\coding dojo\C# stack\Final project\OMEGAme\server\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = D:\coding dojo\C# stack\Final project\OMEGAme\server
+=======
+build_property.ProjectDir = E:\OMEGAme\server\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\OMEGAme\server
+>>>>>>> ce91a8fabe768aca5f2328889a2b50c57b84bcf0
 build_property._RazorSourceGeneratorDebug = 

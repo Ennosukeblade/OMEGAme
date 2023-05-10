@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "b3rH3g47aPgc4eZ5nDs4mxTLoNfeE/s/sHe8oxZfS4c=",
+=======
+  "Hash": "vZeC90fk5dBqXe2tg47Ja/FSI1vWe+3b73NGZw4bAHc=",
+>>>>>>> ce91a8fabe768aca5f2328889a2b50c57b84bcf0
   "Source": "server",
   "BasePath": "_content/server",
   "Mode": "Default",
@@ -5576,10 +5580,17 @@
       "OriginalItemSpec": "wwwroot\\uploads\\20\\UnityPlayer.dll"
     },
     {
+<<<<<<< HEAD
       "Identity": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\wwwroot\\uploads\\desktop.ini",
       "SourceId": "server",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\wwwroot\\",
+=======
+      "Identity": "E:\\OMEGAme\\server\\wwwroot\\uploads\\desktop.ini",
+      "SourceId": "server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\OMEGAme\\server\\wwwroot\\",
+>>>>>>> ce91a8fabe768aca5f2328889a2b50c57b84bcf0
       "BasePath": "_content/server",
       "RelativePath": "uploads/desktop.ini",
       "AssetKind": "All",
