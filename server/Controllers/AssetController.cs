@@ -64,7 +64,7 @@ namespace server.Controllers
             await file.CopyToAsync(stream);
             var fileName = Path.GetFileNameWithoutExtension(file.FileName);
             using var archive = new ZipArchive(stream);
-            var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            var extractionPath = Path.Combine("E:/OMEGAme/server/wwwroot", "uploads");
             archive.ExtractToDirectory(extractionPath);
             var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
 
