@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.IO.Compression;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
 using server.Models;
 using Microsoft.VisualBasic.FileIO;
 
@@ -82,14 +77,17 @@ namespace server.Controllers
             using var archive = new ZipArchive(stream);
             var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
             archive.ExtractToDirectory(extractionPath);
-            var directoryName = new DirectoryInfo(extractionPath).GetDirectories().FirstOrDefault()?.Name;
+            var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
 
             // Rename the folder
-
             var folderName = $"{id}";
             var oldPath = Path.Combine(extractionPath, directoryName);
             FileSystem.RenameDirectory(oldPath, folderName);
+            System.Console.WriteLine(oldPath);
+
+            //* Update Game
             var newPath = Path.Combine(extractionPath, folderName);
+            Directory.CreateDirectory(Path.Combine(newPath,"images"));
             newGame.Path = newPath;
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");

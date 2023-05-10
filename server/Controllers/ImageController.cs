@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using server.Models;
 
 namespace server.Controllers
@@ -35,12 +33,36 @@ namespace server.Controllers
             return image;
         }
         //* POST: api/Image
-        [HttpPost]
-        public async Task<ActionResult<Image>> CreateImage(Image NewImage)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<Image>> CreateImage(IFormFile image, int id)
         {
-            _context.Images.Add(NewImage);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage);
+            Game? Game = await _context.Games.FindAsync(id);
+
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif",".webp" }; // Add more if needed
+            var extension = Path.GetExtension(image.FileName).ToLower();
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest("Invalid file type. Allowed file types are: " + string.Join(", ", allowedExtensions));
+            }
+            if (image != null && image.Length > 0)
+            {
+                var fileName = Path.GetFileName(image.FileName);
+                var filePath = Path.Combine("wwwroot", "uploads",Game.GameId.ToString(),"images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+                var NewImage = new Image { GameId = Game.GameId, FileName = filePath };
+                NewImage.FileName = filePath;
+                _context.Images.Add(NewImage);
+                await _context.SaveChangesAsync();
+                return StatusCode(200, CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage));
+            }
+
+            return BadRequest("No image was uploaded");
+
         }
         //* DELETE: api/Image/{id}
         [HttpDelete("{id}")]
