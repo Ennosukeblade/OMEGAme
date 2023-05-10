@@ -2,7 +2,7 @@ import { useState } from "react";
 import GameCard from "../components/GameCard";
 import GameCard2 from "../components/GameCard2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Iframe from "react-iframe";
+//import Iframe from "react-iframe";
 //import "../components/styles/Games.css";
 interface Icard {
   title: string;
@@ -98,8 +98,8 @@ const Games = () => {
           />
         ))}
       </div>
-      
-      <Iframe
+
+      {/* <Iframe
         url="https://incredible-meringue-8ae046.netlify.app/"
         width="1280px"
         height="720px"
@@ -107,7 +107,7 @@ const Games = () => {
         className=""
         position="relative"
         allowFullScreen={true}
-      />
+      /> */}
     </div>
   );
 };

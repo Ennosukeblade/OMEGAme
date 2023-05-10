@@ -59,7 +59,7 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
             return StatusCode(200,CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame));
         }
-        // //* POST: api/Game
+        //* POST: api/Game
         [HttpPost("upload/{id}")]
         public async Task<IActionResult> UploadFile(IFormFile file, int id)
         {
