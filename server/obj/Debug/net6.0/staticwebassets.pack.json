@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\ModelAssets\\1\\Rocket.blend",
+      "PackagePath": "staticwebassets\\ModelAssets\\1\\Rocket.blend"
+    },
+    {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\19\\MonoBleedingEdge\\EmbedRuntime\\MonoPosixHelper.dll",
       "PackagePath": "staticwebassets\\uploads\\19\\MonoBleedingEdge\\EmbedRuntime\\MonoPosixHelper.dll"
     },
@@ -1307,6 +1311,82 @@
     {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\20\\UnityPlayer.dll",
       "PackagePath": "staticwebassets\\uploads\\20\\UnityPlayer.dll"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\Build\\Snow Border- Web Version.data",
+      "PackagePath": "staticwebassets\\uploads\\22\\Build\\Snow Border- Web Version.data"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\Build\\Snow Border- Web Version.framework.js",
+      "PackagePath": "staticwebassets\\uploads\\22\\Build\\Snow Border- Web Version.framework.js"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\Build\\Snow Border- Web Version.loader.js",
+      "PackagePath": "staticwebassets\\uploads\\22\\Build\\Snow Border- Web Version.loader.js"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\Build\\Snow Border- Web Version.wasm",
+      "PackagePath": "staticwebassets\\uploads\\22\\Build\\Snow Border- Web Version.wasm"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\GUID.txt",
+      "PackagePath": "staticwebassets\\uploads\\22\\GUID.txt"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\ProjectVersion.txt",
+      "PackagePath": "staticwebassets\\uploads\\22\\ProjectVersion.txt"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\StreamingAssets\\UnityServicesProjectConfiguration.json",
+      "PackagePath": "staticwebassets\\uploads\\22\\StreamingAssets\\UnityServicesProjectConfiguration.json"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\favicon.ico",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\favicon.ico"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\fullscreen-button.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\fullscreen-button.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\progress-bar-empty-dark.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\progress-bar-empty-dark.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\progress-bar-empty-light.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\progress-bar-empty-light.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\progress-bar-full-dark.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\progress-bar-full-dark.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\progress-bar-full-light.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\progress-bar-full-light.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\style.css",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\style.css"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\unity-logo-dark.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\unity-logo-dark.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\unity-logo-light.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\unity-logo-light.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\TemplateData\\webgl-logo.png",
+      "PackagePath": "staticwebassets\\uploads\\22\\TemplateData\\webgl-logo.png"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\dependencies.txt",
+      "PackagePath": "staticwebassets\\uploads\\22\\dependencies.txt"
+    },
+    {
+      "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\22\\index.html",
+      "PackagePath": "staticwebassets\\uploads\\22\\index.html"
     },
     {
       "Id": "E:\\OMEGAme\\server\\wwwroot\\uploads\\desktop.ini",

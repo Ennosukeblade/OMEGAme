@@ -23,7 +23,6 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetAllGames()
         {
-            List<Game> AllGames = _context.Games.Include(g => g.Creator).ToList();
             return await _context.Games.ToListAsync();
         }
         //* GET: api/Game/{id}
