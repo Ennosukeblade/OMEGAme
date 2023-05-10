@@ -8,6 +8,7 @@ namespace server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class AssetController : ControllerBase
     {
         private readonly MyContext _context;
@@ -46,35 +47,30 @@ namespace server.Controllers
         [HttpPost("upload/{id}")]
         public async Task<IActionResult> UploadAsset(IFormFile file, int id)
         {
-            Asset? newAsset = await _context.Assets.FindAsync(id);
+            Asset? newAsset = await _context.Assets.FirstOrDefaultAsync(c => c.AssetId == id);
 
             if (file == null || file.Length == 0)
             {
                 return BadRequest("Please provide a file");
             }
-
-            var folderName = $"{id}";
-            var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "ModelAssets", folderName);
-            Directory.CreateDirectory(extractionPath);
-            var filePath = Path.Combine(extractionPath, file.FileName); // Generate the file path
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
-
-            
-
+            // Uncompress the file
+            using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            using var archive = new ZipArchive(stream);
+            var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "ModelAssets");
+            Directory.CreateDirectory(Path.Combine(extractionPath, id.ToString()));
+            archive.ExtractToDirectory(Path.Combine(extractionPath, id.ToString()));
             var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
 
-            Directory.CreateDirectory(Path.Combine(extractionPath, "images"));
-            newAsset.Path = Path.Combine(extractionPath, directoryName);
-
+            //* Update Game
+            Directory.CreateDirectory(Path.Combine(Path.Combine(extractionPath, id.ToString()), "images"));
+            newAsset.Path = Path.Combine(Path.Combine(extractionPath, id.ToString()));
             await _context.SaveChangesAsync();
-
             return Ok();
+
+
         }
-        
+
 
 
 
@@ -82,7 +78,7 @@ namespace server.Controllers
 
 
         //* DELETE: api/Asset/5
-                [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsset(int id)
         {
             var asset = await _context.Assets.FindAsync(id);
