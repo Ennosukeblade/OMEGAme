@@ -58,10 +58,10 @@ namespace server.Controllers
             await file.CopyToAsync(stream);
             using var archive = new ZipArchive(stream);
             var extractionPath = Path.Combine(_hostingEnvironment.WebRootPath, "ModelAssets");
-            Directory.CreateDirectory(Path.Combine(extractionPath, id.ToString()));
-            archive.ExtractToDirectory(Path.Combine(extractionPath, id.ToString()));
-            var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
 
+            archive.ExtractToDirectory(extractionPath);
+            var directoryName = new DirectoryInfo(extractionPath).GetDirectories().LastOrDefault()?.Name;
+            FileSystem.RenameDirectory(Path.Combine(extractionPath,directoryName), id.ToString());
             //* Update Game
             Directory.CreateDirectory(Path.Combine(Path.Combine(extractionPath, id.ToString()), "images"));
             newAsset.Path = Path.Combine(Path.Combine(extractionPath, id.ToString()));
