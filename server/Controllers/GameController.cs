@@ -29,15 +29,15 @@ namespace server.Controllers
             //return AllGames;
 
 
-                var options = new JsonSerializerOptions
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
+            //     var options = new JsonSerializerOptions
+            //     {
+            //         ReferenceHandler = ReferenceHandler.Preserve,
                     
-                };
+            //     };
 
-            var jsonString = JsonSerializer.Serialize(AllGames, options);
+            // var jsonString = JsonSerializer.Serialize(AllGames, options);
 
-            return Ok(jsonString);
+            return Ok(AllGames);
         }
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
