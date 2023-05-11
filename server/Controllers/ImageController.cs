@@ -57,7 +57,7 @@ namespace server.Controllers
                 var NewImage = new Image { GameId = Game.GameId, FileName = filePath };
                 _context.Images.Add(NewImage);
                 await _context.SaveChangesAsync();
-                return  CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage);
+                return  StatusCode(200,CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage));
             }
 
             return BadRequest("No image was uploaded");
