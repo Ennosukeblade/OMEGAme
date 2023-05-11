@@ -59,7 +59,7 @@ namespace server.Controllers
                 var NewAssetImage = new AssetImage { AssetId = Asset.AssetId, FileName = filePath };
                 _context.AssetImages.Add(NewAssetImage);
                 await _context.SaveChangesAsync();
-                return  CreatedAtAction(nameof(AssetImage), new { id = NewAssetImage.AssetImageId }, NewAssetImage);
+                return  StatusCode(200,CreatedAtAction(nameof(AssetImage), new { id = NewAssetImage.AssetImageId }, NewAssetImage));
             }
 
             return BadRequest("No image was uploaded");

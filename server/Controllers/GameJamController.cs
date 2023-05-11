@@ -40,7 +40,7 @@ namespace server.Controllers
         {
             _context.GameJams.Add(NewGameJam);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GameJam), new { id = NewGameJam.GameJamId }, NewGameJam);
+            return StatusCode(200,CreatedAtAction(nameof(GameJam), new { id = NewGameJam.GameJamId }, NewGameJam));
         }
     }
 }

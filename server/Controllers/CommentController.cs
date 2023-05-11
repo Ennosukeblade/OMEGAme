@@ -40,7 +40,7 @@ namespace server.Controllers
         {
             _context.Comments.Add(NewComment);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Comment), new { id = NewComment.CommentId }, NewComment);
+            return StatusCode(200,CreatedAtAction(nameof(Comment), new { id = NewComment.CommentId }, NewComment));
         }
         //* DELETE: api/Comment/5
         [HttpDelete("{id}")]

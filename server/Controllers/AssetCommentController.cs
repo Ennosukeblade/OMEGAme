@@ -40,7 +40,7 @@ namespace server.Controllers
         {
             _context.AssetComments.Add(NewAssetComment);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(AssetComment), new { id = NewAssetComment.AssetCommentId }, NewAssetComment);
+            return StatusCode(200,CreatedAtAction(nameof(AssetComment), new { id = NewAssetComment.AssetCommentId }, NewAssetComment));
         }
     }
 }

@@ -40,7 +40,7 @@ namespace server.Controllers
         {
             _context.Votes.Add(NewVote);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Vote), new { id = NewVote.VoteId }, NewVote);
+            return StatusCode(200,CreatedAtAction(nameof(Vote), new { id = NewVote.VoteId }, NewVote));
         }
         //* DELETE: api/Vote/5
         [HttpDelete("{id}")]

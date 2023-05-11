@@ -40,7 +40,7 @@ namespace server.Controllers
         {
             _context.Rewards.Add(NewReward);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Reward), new { id = NewReward.RewardId }, NewReward);
+            return StatusCode(200,CreatedAtAction(nameof(Reward), new { id = NewReward.RewardId }, NewReward));
         }
     }
 }
