@@ -1247,26 +1247,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\octanet\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\OMEGAme\\server\\server.csproj",
+      "projectUniqueName": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "E:\\OMEGAme\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\octanet\\.nuget\\packages\\",
-      "outputPath": "E:\\OMEGAme\\server\\obj\\",
+      "projectPath": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\octanet\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1319,7 +1317,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.105\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.407\\RuntimeIdentifierGraph.json"
       }
     }
   }

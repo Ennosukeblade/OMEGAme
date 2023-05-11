@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 interface Igame {
@@ -154,15 +154,13 @@ const Games = () => {
             color: 'Black',
         },
     ]
-    const [games,setGames] = useState<Array<Igame>>([])
+    const [games, setGames] = useState<Array<Igame>>([])
     useEffect(() => {
-      axios.get("")
-    
-      return () => {
-        
-      }
+        axios.get<Igame>("https://localhost:7223/api/Game")
+            .then(response => console.log(response.data)).catch(err => console.log(err)
+            )
     }, [])
-    
+
     return (
         <div className="mx-auto max-w-2xl p-4 sm:px-4 lg:max-w-7xl lg:p-4 bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
             {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2> */}
