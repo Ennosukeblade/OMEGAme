@@ -1,5 +1,6 @@
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\appsettings.Development.json
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\appsettings.json
+D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\server.staticwebassets.runtime.json
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\server.exe
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\server.deps.json
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\server.runtimeconfig.json
@@ -23,6 +24,7 @@ D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Microsoft.
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Microsoft.OpenApi.dll
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Mono.TextTemplating.dll
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\MySqlConnector.dll
+D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -47,60 +49,3 @@ D:\coding dojo\C# stack\Final project\OMEGAme\server\obj\Debug\net6.0\refint\ser
 D:\coding dojo\C# stack\Final project\OMEGAme\server\obj\Debug\net6.0\server.pdb
 D:\coding dojo\C# stack\Final project\OMEGAme\server\obj\Debug\net6.0\server.genruntimeconfig.cache
 D:\coding dojo\C# stack\Final project\OMEGAme\server\obj\Debug\net6.0\ref\server.dll
-E:\OMEGAme\server\bin\Debug\net6.0\appsettings.Development.json
-E:\OMEGAme\server\bin\Debug\net6.0\appsettings.json
-E:\OMEGAme\server\bin\Debug\net6.0\server.exe
-E:\OMEGAme\server\bin\Debug\net6.0\server.deps.json
-E:\OMEGAme\server\bin\Debug\net6.0\server.runtimeconfig.json
-E:\OMEGAme\server\bin\Debug\net6.0\server.dll
-E:\OMEGAme\server\bin\Debug\net6.0\server.pdb
-E:\OMEGAme\server\bin\Debug\net6.0\Humanizer.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Microsoft.OpenApi.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Mono.TextTemplating.dll
-E:\OMEGAme\server\bin\Debug\net6.0\MySqlConnector.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-E:\OMEGAme\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-E:\OMEGAme\server\bin\Debug\net6.0\System.CodeDom.dll
-E:\OMEGAme\server\bin\Debug\net6.0\System.Text.Encodings.Web.dll
-E:\OMEGAme\server\bin\Debug\net6.0\System.Text.Json.dll
-E:\OMEGAme\server\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
-E:\OMEGAme\server\obj\Debug\net6.0\server.csproj.AssemblyReference.cache
-E:\OMEGAme\server\obj\Debug\net6.0\server.GeneratedMSBuildEditorConfig.editorconfig
-E:\OMEGAme\server\obj\Debug\net6.0\server.AssemblyInfoInputs.cache
-E:\OMEGAme\server\obj\Debug\net6.0\server.AssemblyInfo.cs
-E:\OMEGAme\server\obj\Debug\net6.0\server.csproj.CoreCompileInputs.cache
-E:\OMEGAme\server\obj\Debug\net6.0\server.MvcApplicationPartsAssemblyInfo.cs
-E:\OMEGAme\server\obj\Debug\net6.0\server.MvcApplicationPartsAssemblyInfo.cache
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets\msbuild.server.Microsoft.AspNetCore.StaticWebAssets.props
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets\msbuild.build.server.props
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.server.props
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.server.props
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets.pack.json
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets.build.json
-E:\OMEGAme\server\obj\Debug\net6.0\staticwebassets.development.json
-E:\OMEGAme\server\obj\Debug\net6.0\scopedcss\bundle\server.styles.css
-E:\OMEGAme\server\obj\Debug\net6.0\server.csproj.CopyComplete
-E:\OMEGAme\server\obj\Debug\net6.0\server.dll
-E:\OMEGAme\server\obj\Debug\net6.0\refint\server.dll
-E:\OMEGAme\server\obj\Debug\net6.0\server.pdb
-E:\OMEGAme\server\obj\Debug\net6.0\server.genruntimeconfig.cache
-E:\OMEGAme\server\obj\Debug\net6.0\ref\server.dll
-E:\OMEGAme\server\bin\Debug\net6.0\server.staticwebassets.runtime.json
-D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\server.staticwebassets.runtime.json
-D:\coding dojo\C# stack\Final project\OMEGAme\server\bin\Debug\net6.0\Newtonsoft.Json.dll

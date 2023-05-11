@@ -5,6 +5,8 @@ using server.Models;
 using Microsoft.VisualBasic.FileIO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace server.Controllers
 {
@@ -23,23 +25,10 @@ namespace server.Controllers
 
         // GET: api/game
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetAllGames()
+        public async Task<ActionResult<Game>> GetAllGames()
         {
-            //List<Game> AllGames = await _context.Games.Include(g => g.Creator).ToListAsync();
-            //return await _context.Games.ToListAsync();
-            //return AllGames;
-
-            List<Game> AllGames = await _context.Games.Include(g => g.MyImages).ToListAsync();
-
-            //return AllGames;
-            // var options = new JsonSerializerOptions
-            // {
-            //     ReferenceHandler = ReferenceHandler.Preserve,
-            // };
-            // var jsonString = JsonSerializer.Serialize(AllGames, options);
-
+            List<Game> AllGames = _context.Games.Include(g => g.Creator).ToList();
             return Ok(AllGames);
-            //return Ok(AllGames);
         }
         //* GET: api/Game/{id}
         [HttpGet("{id}")]

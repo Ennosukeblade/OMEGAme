@@ -71,12 +71,6 @@ namespace server.Controllers
 
         }
 
-
-
-
-
-
-
         //* DELETE: api/Asset/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsset(int id)
