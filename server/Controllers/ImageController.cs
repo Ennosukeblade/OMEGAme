@@ -39,7 +39,7 @@ namespace server.Controllers
             Game? Game = await _context.Games.FindAsync(id);
 
 
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif",".webp" }; // Add more if needed
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" }; // Add more if needed
             var extension = Path.GetExtension(image.FileName).ToLower();
             if (!allowedExtensions.Contains(extension))
             {
@@ -48,14 +48,13 @@ namespace server.Controllers
             if (image != null && image.Length > 0)
             {
                 var fileName = Path.GetFileName(image.FileName);
-                var filePath = Path.Combine("wwwroot", "uploads",Game.GameId.ToString(),"images", fileName);
+                var filePath = Path.Combine("wwwroot", "uploads", Game.GameId.ToString(), "images", fileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await image.CopyToAsync(fileStream);
                 }
                 var NewImage = new Image { GameId = Game.GameId, FileName = filePath };
-                NewImage.FileName = filePath;
                 _context.Images.Add(NewImage);
                 await _context.SaveChangesAsync();
                 return StatusCode(200, CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage));

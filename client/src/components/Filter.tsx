@@ -236,7 +236,7 @@ const Filter = () => {
                         <div className="grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-5 ">
                             {/* Filters */}
                             {/* bg-green-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 border border-gray-100 */}
-                            <form className=" hidden lg:block sticky top-14 h-max pt-4 px-4 bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
+                            <form className="hidden lg:block sticky top-14 h-max pt-4 px-4 bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
                                 {/* <div className='h-full w-full bg-green-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 border border-gray-100'> */}
                                 <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">

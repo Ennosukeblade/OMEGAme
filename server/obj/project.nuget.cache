@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "F0n9LYjWlgaHltSyegkBqF0xXcghnrhEvOthRfcnZjbyafPTz+GFBXBp9pZ7t4PJZZErvHZzT7VOuw9mUGW69A==",
+  "dgSpecHash": "tHdtRKas+NKsAd0SDJD/DYmB5GYu+X8NgVLTv/M7cvksgTug1cf5YfKa8PE4fYfQU6WUdsb1t821d1ENyhrYAg==",
   "success": true,
   "projectFilePath": "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\server.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",

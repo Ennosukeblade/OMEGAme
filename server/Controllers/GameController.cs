@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 using server.Models;
 using Microsoft.VisualBasic.FileIO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace server.Controllers
 {
@@ -23,8 +25,21 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetAllGames()
         {
-            List<Game> AllGames = _context.Games.Include(g => g.Creator).ToList();
-            return await _context.Games.ToListAsync();
+            //List<Game> AllGames = await _context.Games.Include(g => g.Creator).ToListAsync();
+            //return await _context.Games.ToListAsync();
+            //return AllGames;
+
+            List<Game> AllGames = await _context.Games.Include(g => g.MyImages).ToListAsync();
+
+            //return AllGames;
+            // var options = new JsonSerializerOptions
+            // {
+            //     ReferenceHandler = ReferenceHandler.Preserve,
+            // };
+            // var jsonString = JsonSerializer.Serialize(AllGames, options);
+
+            return Ok(AllGames);
+            //return Ok(AllGames);
         }
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
@@ -57,7 +72,7 @@ namespace server.Controllers
         {
             _context.Games.Add(NewGame);
             await _context.SaveChangesAsync();
-            return StatusCode(200,CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame));
+            return StatusCode(200, CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame));
         }
         //* POST: api/Game
         [HttpPost("upload/{id}")]
@@ -87,7 +102,7 @@ namespace server.Controllers
 
             //* Update Game
             var newPath = Path.Combine(extractionPath, folderName);
-            Directory.CreateDirectory(Path.Combine(newPath,"images"));
+            Directory.CreateDirectory(Path.Combine(newPath, "images"));
             newGame.Path = newPath;
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");
