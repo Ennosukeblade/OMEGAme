@@ -89,7 +89,7 @@ namespace server.Controllers
                     // Save
                     await _context.SaveChangesAsync();
                     HttpContext.Session.SetInt32("userId", NewUser.UserId);
-                    return Ok();
+                    return StatusCode(200,CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
                 }
             }
             return BadRequest();

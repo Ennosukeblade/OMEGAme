@@ -23,6 +23,23 @@ namespace server.Controllers
         {
             return await _context.GameJams.ToListAsync();
         }
+        //* GET: api/GameJam/games
+        [HttpGet("games/{id}")]
+        public async Task<ActionResult<GameJam>> GetAllGameJamGames(int id)
+        {
+            List<GameJam> AllGameJamGames = await _context.GameJams
+    .Include(g => g.MyInGames)
+            .ThenInclude(g => g.Creator)
+    .Include(g => g.MyInGames)
+        .ThenInclude(igj => igj.GameVotes)
+    .Include(g => g.MyInGames)
+        .ThenInclude(g => g.InGameComments)
+    .Include(g => g.MyInGames)
+        .ThenInclude(g => g.MyImages)
+    .Where(g => g.GameJamId == id)
+    .ToListAsync();
+            return Ok(AllGameJamGames);
+        }
         //* GET: api/GameJam/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<GameJam>> GetGameJamById(int id)
@@ -40,7 +57,7 @@ namespace server.Controllers
         {
             _context.GameJams.Add(NewGameJam);
             await _context.SaveChangesAsync();
-            return StatusCode(200,CreatedAtAction(nameof(GameJam), new { id = NewGameJam.GameJamId }, NewGameJam));
+            return StatusCode(200, CreatedAtAction(nameof(GameJam), new { id = NewGameJam.GameJamId }, NewGameJam));
         }
     }
 }

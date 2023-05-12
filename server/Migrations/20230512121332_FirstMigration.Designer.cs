@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Models;
 
@@ -10,9 +11,11 @@ using server.Models;
 namespace server.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20230512121332_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,7 +164,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("GameJamId")
+                    b.Property<int>("GameJamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Genre")
@@ -417,7 +420,9 @@ namespace server.Migrations
                 {
                     b.HasOne("server.Models.GameJam", "InGameJam")
                         .WithMany("MyInGames")
-                        .HasForeignKey("GameJamId");
+                        .HasForeignKey("GameJamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("server.Models.User", "Creator")
                         .WithMany("MyGames")

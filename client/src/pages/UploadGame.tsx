@@ -31,13 +31,13 @@ export const UploadGame = () => {
     "Massively multiplayer online",
   ];
   const [game, setGame] = useState<IGame>({
-    UserId:10,
+    UserId:1,
     Title: "",
     Genre: "",
     Price: 0,
     Description: "",
     isPlayable: false,
-    Path:"E:/OMEGAme/server/wwwroot" 
+    Path:"E:/OMEGAme/server/wwwroot" ,
   });
   const [formData, setFormData] = useState<FormData | null>(null);
   const handleFileUpload = async (file: File) => {

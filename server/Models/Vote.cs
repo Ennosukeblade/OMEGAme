@@ -10,8 +10,8 @@ public class Vote
     public int UserId { get; set; }
     public User? User { get; set; }
     [Required]
-    public int InGameJamId { get; set; }
-    public InGameJam? InGameJam { get; set; }
+    public int GameId { get; set; } 
+    public Game? VotesInGame { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }

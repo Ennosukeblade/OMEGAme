@@ -27,19 +27,26 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
         {
-            List<Game> AllGames = _context.Games.Include(g => g.Creator).ToList();
+            List<Game> AllGames = _context.Games.Include(g => g.Creator).Include(i=>i.MyImages).Where(g=>g.GameJamId==null).ToList();
             return Ok(AllGames);
         }
+        // GET: api/game
+        // [HttpGet("GameJam/games")]
+        // public async Task<ActionResult<Game>> GetAllGameJamGames()
+        // {
+        //     List<Game> AllGameJamGames =await  _context.Games.Include(g => g.GameInGameJams).ThenInclude(a=>a.GameJam).ToListAsync();
+        //     return Ok(AllGameJamGames);
+        // }
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGameById(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            Game? game = await _context.Games.Include(u=>u.Creator).Include(i=>i.MyImages).Include(c=>c.InGameComments).FirstOrDefaultAsync(u=>u.GameId==id);
             if (game == null)
             {
                 return NotFound();
             }
-            return game;
+            return Ok(game);
         }
         // [HttpGet("{id}")]
         // public IActionResult GetFile(string id)

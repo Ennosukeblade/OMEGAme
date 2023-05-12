@@ -9,6 +9,10 @@ public class Game
     public int UserId { get; set; }
     // Navigation Property : creator
     public User? Creator { get; set; }
+    public int? GameJamId { get; set; }
+    // Navigation Property : creator
+    public GameJam? InGameJam { get; set; }
+
     [Required]
     public string Title { get; set; }
     [Required]
@@ -24,10 +28,11 @@ public class Game
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     // * Comments In Game 
-    public List<Comment> MyComments {get;set;} = new List<Comment>();
-    // *  Game In GameJam 
-    public List<InGameJam> GameInGameJams {get;set;} = new List<InGameJam>();
+    public List<Comment> InGameComments {get;set;} = new List<Comment>();
+
     // *  Game Have images
     public List<Image> MyImages {get;set;} = new List<Image>();
+    // *  Game Have images
+    public List<Vote> GameVotes {get;set;} = new List<Vote>();
 
 }

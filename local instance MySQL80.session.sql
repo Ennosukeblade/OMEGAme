@@ -1,0 +1,2 @@
+ALTER TABLE Votes DROP FOREIGN KEY InGameJamId;
+
