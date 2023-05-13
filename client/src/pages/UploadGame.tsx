@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 interface IGame {
   UserId: number;
@@ -31,26 +32,19 @@ export const UploadGame = () => {
     "Massively multiplayer online",
   ];
   const [game, setGame] = useState<IGame>({
-    UserId:1,
+    UserId: 1,
     Title: "",
     Genre: "",
     Price: 0,
     Description: "",
     isPlayable: false,
-    Path:"E:/OMEGAme/server/wwwroot" ,
+    Path: "E:/OMEGAme/server/wwwroot",
   });
   const [formData, setFormData] = useState<FormData | null>(null);
   const handleFileUpload = async (file: File) => {
     const data = new FormData();
     data.append("file", file);
     setFormData(data);
-
-
-    // if (response.ok) {
-    //   console.log("File uploaded successfully");
-    // } else {
-    //   console.error("Failed to upload file");
-    // }
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -59,35 +53,74 @@ export const UploadGame = () => {
       handleFileUpload(file);
     }
   };
+
+  // const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
+  // const handleImageUpload = async (file: File) => {
+    
+  //     const imageData = new FormData();
+  //     imageData.append("file", file);
+  //     setFormDataImage(imageData);
+  // };
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files;
+  //   if (files && files.length > 0) {
+  //     const file = files[0];
+  //     handleImageUpload(file);
+  //   }
+  // };
+  const [images, setImages] = useState<File>(new File([], ''));
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setImages(event.target.files[0]);
+    }
+  };
   const handleChange = (e: ChangeEvent) => {
     e.preventDefault();
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
     setGame({ ...game, [name]: value });
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios
-      .post("https://localhost:7223/api/game", game)
-      .then((response) => {
-        if (response.status === 200) {
-            
-            const gameId = response.data.value.gameId;
-          // *Make another POST request here
-          axios
+    try {
+    // Step 1: Create the game
+    const gameResponse = await axios.post("https://localhost:7223/api/game", game);
+    if (gameResponse.status === 200) {
+      const gameId = gameResponse.data.value.gameId;
+          // *Make another POST request here for game file
+          console.log(formData);
+          const gameUploadResponse  = await axios
             .post(`https://localhost:7223/api/Game/upload/${gameId}`, formData)
-            .then((response) => {
-                console.log("File uploaded successfully",response.data);
-            })
-            .catch((error) => {
-                console.log("❌ ERROR from server", error);
-            });
+            if (gameUploadResponse.status === 200) {
+            console.log("Game file uploaded successfully", gameUploadResponse.data);
+            }
+              const headers = {
+                "Content-Type": "multipart/form-data",
+              };
+              console.log(images)
+              
+                const imageFormData = new FormData();
+                imageFormData.append("image", images);
+                console.log(imageFormData)
+                
+              const imageUploadResponse = await axios
+                .post(`https://localhost:7223/api/Image/${gameId}`, imageFormData,{headers},)
+                if (gameResponse.status === 200)
+                {
+                  console.log("Image uploaded successfully", imageUploadResponse.data);
+                }
+              
+            
+          // *Make another POST request here for images
+          
+          
         } else {
           // Handle other response statuses here
         }
-      })
-      .catch((error) => {
+      }
+      catch(error) {
         console.log("❌ ERROR from server", error);
-      });
+      };
   };
   return (
     <>
@@ -121,7 +154,6 @@ export const UploadGame = () => {
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Event title"
                     name="Title"
-                    
                     onChange={handleChange}
                   />
                 </div>
@@ -146,7 +178,6 @@ export const UploadGame = () => {
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Leave it empty if free"
                     name="Price"
-                    
                     onChange={handleChange}
                   />
                 </div>
@@ -168,12 +199,29 @@ export const UploadGame = () => {
                   />
                 </div>
                 <div className="flex flex-col">
+                  <label className="leading-loose">Upload Images:</label>
+                  <p className="text-sm pb-1">You can only upload 5 images</p>
+                  <input
+                    type="file"
+                    multiple
+                    onChange={handleImageChange}
+                    className="block w-full text-sm text-slate-500
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-full file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-violet-50
+                                        hover:file:bg-violet-100"
+                  />
+                </div>
+
+                <div className="flex flex-col">
                   <label className="leading-loose">Description</label>
                   <textarea
                     rows={4}
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     name="Description"
-                    onChange={handleChange}></textarea>
+                    onChange={handleChange}
+                  ></textarea>
                 </div>
                 {/* <div className="flex items-center space-x-4">
                                         <div className="flex flex-col">
@@ -229,3 +277,4 @@ export const UploadGame = () => {
     </>
   );
 };
+

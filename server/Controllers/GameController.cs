@@ -3,10 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 using server.Models;
 using Microsoft.VisualBasic.FileIO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace server.Controllers
 {
@@ -27,16 +23,10 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
         {
-            List<Game> AllGames = _context.Games.Include(g => g.Creator).Include(i=>i.MyImages).Where(g=>g.GameJamId==null).ToList();
+            List<Game> AllGames = await _context.Games.Include(g => g.Creator).Include(i=>i.MyImages).Where(g=>g.GameJamId==null).ToListAsync();
             return Ok(AllGames);
         }
-        // GET: api/game
-        // [HttpGet("GameJam/games")]
-        // public async Task<ActionResult<Game>> GetAllGameJamGames()
-        // {
-        //     List<Game> AllGameJamGames =await  _context.Games.Include(g => g.GameInGameJams).ThenInclude(a=>a.GameJam).ToListAsync();
-        //     return Ok(AllGameJamGames);
-        // }
+
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGameById(int id)
@@ -48,20 +38,6 @@ namespace server.Controllers
             }
             return Ok(game);
         }
-        // [HttpGet("{id}")]
-        // public IActionResult GetFile(string id)
-        // {
-        //     var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "AllGames", id, "index.html");
-
-        //     if (!System.IO.File.Exists(filePath))
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     var fileBytes = System.IO.File.ReadAllBytes(filePath);
-        //     var contentType = "text/html";
-        //     return File(fileBytes, contentType);
-        // }
         // //* POST: api/CreateGame
         [HttpPost]
         public async Task<ActionResult<Game>> CreateGame(Game NewGame)
