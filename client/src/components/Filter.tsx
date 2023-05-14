@@ -175,7 +175,7 @@ const Filter = () => {
                                     <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                         Sort
                                         <ChevronDownIcon
-                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-500 group-hover:text-gray-700"
                                             aria-hidden="true"
                                         />
                                     </Menu.Button>
@@ -213,17 +213,21 @@ const Filter = () => {
                                 </Transition>
                             </Menu>
 
-                            <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+                            {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                                 <span className="sr-only">View grid</span>
                                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                            </button>
+                            </button> */}
                             <button
                                 type="button"
-                                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                                className="-m-2 ml-4 p-2 text-gray-500 hover:text-gray-700 sm:ml-6 lg:hidden"
                                 onClick={() => setMobileFiltersOpen(true)}
                             >
-                                <span className="sr-only">Filters</span>
-                                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                                <div className="flex items-center gap-1">
+                                    <span className="text-gray-700 hover:text-gray-900">Filters</span>
+                                    <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                                </div>
+
+
                             </button>
                         </div>
                     </div>
@@ -256,9 +260,9 @@ const Filter = () => {
                                                         <span className="font-medium text-gray-900">{section.name}</span>
                                                         <span className="ml-6 flex items-center">
                                                             {open ? (
-                                                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                <MinusIcon className="h-5 w-5 fill-gray-700" aria-hidden="true" />
                                                             ) : (
-                                                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                <PlusIcon className="h-5 w-5 fill-gray-700" aria-hidden="true" />
                                                             )}
                                                         </span>
                                                     </Disclosure.Button>

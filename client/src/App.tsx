@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 import { UploadGame } from './pages/UploadGame';
 import bgImage from '../src/assets/img/BG.svg'
 import OneGame from './components/OneGame';
-//import 'bootstrap.min.css';
+import GameJams from './pages/GameJams';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/games' element={<Games />} />
+          <Route path='/gamejams' element={<GameJams />} />
           <Route path='/games/upload' element={<UploadGame />} />
           <Route path='/games/one' element={<OneGame />} />
         </Routes>

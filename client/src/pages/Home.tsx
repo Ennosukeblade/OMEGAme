@@ -10,7 +10,7 @@ const Home = () => {
             <div className="mx-auto">
 
                 {/* Section: Design Block */}
-                <section>
+                <section className='-mt-16'>
 
                     <div className="bg-no-repeat bg-cover" style={{
                         backgroundPosition: "50%",

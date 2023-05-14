@@ -23,7 +23,7 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
         {
-            List<Game> AllGames = await _context.Games.Include(g => g.Creator).Include(i=>i.MyImages).Where(g=>g.GameJamId==null).ToListAsync();
+            List<Game> AllGames = await _context.Games.Include(g => g.Creator).Include(i => i.MyImages).Where(g => g.GameJamId == null).ToListAsync();
             return Ok(AllGames);
         }
 
@@ -31,7 +31,7 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGameById(int id)
         {
-            Game? game = await _context.Games.Include(u=>u.Creator).Include(i=>i.MyImages).Include(c=>c.InGameComments).FirstOrDefaultAsync(u=>u.GameId==id);
+            Game? game = await _context.Games.Include(u => u.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).FirstOrDefaultAsync(u => u.GameId == id);
             if (game == null)
             {
                 return NotFound();
@@ -78,7 +78,8 @@ namespace server.Controllers
             newGame.Path = newPath;
             // Find the index.html file
             var indexHtmlPath = Path.Combine(newPath, "index.html");
-            if (indexHtmlPath != null)
+            if (System.IO.File.Exists(indexHtmlPath))
+
             {
                 newGame.isPlayable = true;
             }

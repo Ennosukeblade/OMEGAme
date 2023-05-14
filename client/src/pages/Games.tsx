@@ -1,7 +1,6 @@
 import { useState } from "react";
 import GameCard from "../components/GameCard";
 import GameCard2 from "../components/GameCard2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //import Iframe from "react-iframe";
 //import "../components/styles/Games.css";
 interface Icard {
@@ -14,74 +13,7 @@ interface Icard {
   os: string[];
 }
 const Games = () => {
-  const [game, setGame] = useState<Icard[]>([
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows", "android"],
-    },
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows", "android", "inBrowser"],
-    },
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows", "android"],
-    },
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows", "android"],
-    },
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows"],
-    },
-    {
-      title: "Night Of The Consumers",
-      image:
-        "https://img.itch.zone/aW1hZ2UvNTY0MjM4LzExOTk4Mjk3LnBuZw==/347x500/3nA%2FTn.png",
-      author: "John Doe",
-      avatar: "https://itch.io/static/images/frog-gold.png",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae eros nec erat venenatis tincidunt nec sit amet orci. Phasellus.",
-      badges: ["Horror", "Free"],
-      os: ["windows", "inBrowser"],
-    },
-  ]);
+  const [game, setGame] = useState<Icard[]>([]);
   console.log("game");
   return (
     <div className="container mx-auto px-4">

@@ -21,7 +21,7 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameJam>>> GetAllGameJams()
         {
-            return await _context.GameJams.ToListAsync();
+            return await _context.GameJams.Include(u=>u.Creator).ToListAsync();
         }
         //* GET: api/GameJam/games
         [HttpGet("games/{id}")]
@@ -32,8 +32,6 @@ namespace server.Controllers
             .ThenInclude(g => g.Creator)
     .Include(g => g.MyInGames)
         .ThenInclude(igj => igj.GameVotes)
-    .Include(g => g.MyInGames)
-        .ThenInclude(g => g.InGameComments)
     .Include(g => g.MyInGames)
         .ThenInclude(g => g.MyImages)
     .Where(g => g.GameJamId == id)

@@ -22,8 +22,8 @@ const NavBar = () => {
           </ul>
           <button onClick={() => nav("/games/upload")} className="px-4 py-2 font-semibold text-sm bg-sky-500/75 text-white rounded-md shadow-sm">Upload a game</button>
         </div>
-      </div> */}
-      <nav className="bg-gray-950">
+      </div>  */}
+      <nav className="sticky top-0 h-max z-20 bg-gray-950 bg-opacity-20 backdrop-filter backdrop-blur-lg">
         <div className="mx-auto px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center lg:justify-between px-12">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
