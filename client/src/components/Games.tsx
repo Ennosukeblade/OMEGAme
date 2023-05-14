@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameCard from './GameCard'
 import image from '../assets/img/wp7471860.jpg'
+import GameCard from './GameCard'
+import image from '../assets/img/wp7471860.jpg'
 
 // interface Igame {
 //     GameId: number
@@ -15,6 +17,152 @@ const Games = () => {
     const path: string = "../../../server/"
     //const path: string = "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\"
 
+    const products = [
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+        {
+            id: 1,
+            name: 'Basic Tee',
+            href: '#',
+            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+            imageAlt: "Front of men's Basic Tee in black.",
+            price: '$35',
+            color: 'Black',
+        },
+    ]
     const [games, setGames] = useState<Array<any>>([])
     useEffect(() => {
         const fetchGames = async () => {
@@ -34,12 +182,12 @@ const Games = () => {
                 {/* <p>{JSON.stringify(games[0]}</p> */}
                 {games.map((game) => {
                     // console.log(path + game.myImages[0].fileName.replace(/\\/g, '/'))
-                    return <>
+                    return <div key={game.gameId}>
                         <GameCard
                             id={game.gameId}
                             title={game.title}
                             price={game.price}
-                            image={game.myImages[0].fileName.replace(/\\/g, '/')}
+                            image={image}
                             creator={game.creator.firstName + " " + game.creator.lastName}
                             avatar='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT93ATNDzBpB63bYDVaL_DL4UXpH_5t0CBZ-UBFrMLfdvLbczdV'
                             date={game.createdAt}
@@ -48,7 +196,7 @@ const Games = () => {
 
                         {/* <p>{path + game.myImages[0].fileName.replace(/\\/g, '/')}</p> */}
                         {/* <img src={require("../../../server/wwwroot/uploads/20/images/image.png")} alt="" /> */}
-                    </>
+                    </div>
                 }
 
                 )}

@@ -1,13 +1,18 @@
 //import "./styles/NavBar.css"
 
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import logo from "../assets/icons/Logo.svg"
 
 const NavBar = () => {
   const nav = useNavigate()
   const [open, setOpen] = useState<boolean>(false)
   const [profileOpen, setProfileOpen] = useState<boolean>(false)
+  const linkStyle = ({ isActive }: { isActive: boolean }) => {
+    return isActive ? "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" :
+      "text-gray-200 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+  }
+
   return (
     <>
       {/* <div className="container mx-auto">
@@ -35,30 +40,31 @@ const NavBar = () => {
 
             Menu open: "hidden", Menu closed: "block"
           */}
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
                 {/*
             Icon when menu is open.
 
             Menu open: "block", Menu closed: "hidden"
           */}
-                <svg className="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <svg className="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             <div className="flex flex-shrink-0 items-center">
-              <Link to={'/'}><img className="block h-10 w-auto lg:hidden" src={logo} alt="Your Company" /></Link>
-              <Link to={'/'}><img className="hidden h-10 w-auto lg:block" src={logo} alt="Your Company" /></Link>
+              <NavLink to={'/'}><img className="block h-10 w-auto lg:hidden" src={logo} alt="Your Company" /></NavLink>
+              <NavLink to={'/'}><img className="hidden h-10 w-auto lg:block" src={logo} alt="Your Company" /></NavLink>
 
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <a href="#" className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Games</a>
-                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Assets</a>
-                <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Game Jams</a>
+                <NavLink to={'/'} className={linkStyle}><p className="drop-shadow-md">Home</p></NavLink>
+                <NavLink to={'/games'} className={linkStyle}><p className="drop-shadow-md">Games</p></NavLink>
+                <NavLink to={'/assets'} className={linkStyle}><p className="drop-shadow-md">Assets</p></NavLink>
+                <NavLink to={'/gamejams'} className={linkStyle}><p className="drop-shadow-md">Game Jams</p></NavLink>
               </div>
             </div>
             {/* <div className="flex flex-1 items-center justify-between sm:justify-start">
@@ -70,8 +76,8 @@ const NavBar = () => {
               </div>
               <button type="button" className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                 <span className="sr-only">View notifications</span>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                 </svg>
               </button>
 
@@ -114,9 +120,10 @@ const NavBar = () => {
           <div className="sm:hidden" id="mobile-menu">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-              <a href="#" className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Games</a>
-              <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Assets</a>
-              <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Game Jams</a>
+              <NavLink to={'/'} className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Home</NavLink>
+              <NavLink to={'/games'} className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Games</NavLink>
+              <NavLink to={'/assets'} className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Assets</NavLink>
+              <NavLink to={'/gamejams'} className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Game Jams</NavLink>
 
             </div>
           </div> :

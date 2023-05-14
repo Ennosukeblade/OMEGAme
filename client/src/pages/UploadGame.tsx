@@ -56,7 +56,7 @@ export const UploadGame = () => {
 
   // const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
   // const handleImageUpload = async (file: File) => {
-    
+
   //     const imageData = new FormData();
   //     imageData.append("file", file);
   //     setFormDataImage(imageData);
@@ -83,44 +83,43 @@ export const UploadGame = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-    // Step 1: Create the game
-    const gameResponse = await axios.post("https://localhost:7223/api/game", game);
-    if (gameResponse.status === 200) {
-      const gameId = gameResponse.data.value.gameId;
-          // *Make another POST request here for game file
-          console.log(formData);
-          const gameUploadResponse  = await axios
-            .post(`https://localhost:7223/api/Game/upload/${gameId}`, formData)
-            if (gameUploadResponse.status === 200) {
-            console.log("Game file uploaded successfully", gameUploadResponse.data);
-            }
-              const headers = {
-                "Content-Type": "multipart/form-data",
-              };
-              console.log(images)
-              
-                const imageFormData = new FormData();
-                imageFormData.append("image", images);
-                console.log(imageFormData)
-                
-              const imageUploadResponse = await axios
-                .post(`https://localhost:7223/api/Image/${gameId}`, imageFormData,{headers},)
-                if (gameResponse.status === 200)
-                {
-                  console.log("Image uploaded successfully", imageUploadResponse.data);
-                }
-              
-            
-          // *Make another POST request here for images
-          
-          
-        } else {
-          // Handle other response statuses here
+      // Step 1: Create the game
+      const gameResponse = await axios.post("https://localhost:7223/api/game", game);
+      if (gameResponse.status === 200) {
+        const gameId = gameResponse.data.value.gameId;
+        // *Make another POST request here for game file
+        console.log(formData);
+        const gameUploadResponse = await axios
+          .post(`https://localhost:7223/api/Game/upload/${gameId}`, formData)
+        if (gameUploadResponse.status === 200) {
+          console.log("Game file uploaded successfully", gameUploadResponse.data);
         }
+        const headers = {
+          "Content-Type": "multipart/form-data",
+        };
+        console.log(images)
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", images);
+        console.log(imageFormData)
+
+        const imageUploadResponse = await axios
+          .post(`https://localhost:7223/api/Image/${gameId}`, imageFormData, { headers },)
+        if (gameResponse.status === 200) {
+          console.log("Image uploaded successfully", imageUploadResponse.data);
+        }
+
+
+        // *Make another POST request here for images
+
+
+      } else {
+        // Handle other response statuses here
       }
-      catch(error) {
-        console.log("❌ ERROR from server", error);
-      };
+    }
+    catch (error) {
+      console.log("❌ ERROR from server", error);
+    };
   };
   return (
     <>

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace server.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -160,7 +160,11 @@ namespace server.Migrations
                     GameId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<int>(type: "int", nullable: false),
+<<<<<<<< HEAD:server/Migrations/20230512175633_FirstMigration.cs
+                    GameJamId = table.Column<int>(type: "int", nullable: true),
+========
                     GameJamId = table.Column<int>(type: "int", nullable: false),
+>>>>>>>> eff40b5408267ffd19c913630ce2265cb7a87608:server/Migrations/20230512121321_Migrations.cs
                     Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Genre = table.Column<string>(type: "longtext", nullable: false)
@@ -181,8 +185,12 @@ namespace server.Migrations
                         name: "FK_Games_GameJams_GameJamId",
                         column: x => x.GameJamId,
                         principalTable: "GameJams",
+<<<<<<<< HEAD:server/Migrations/20230512175633_FirstMigration.cs
+                        principalColumn: "GameJamId");
+========
                         principalColumn: "GameJamId",
                         onDelete: ReferentialAction.Cascade);
+>>>>>>>> eff40b5408267ffd19c913630ce2265cb7a87608:server/Migrations/20230512121321_Migrations.cs
                     table.ForeignKey(
                         name: "FK_Games_Users_UserId",
                         column: x => x.UserId,

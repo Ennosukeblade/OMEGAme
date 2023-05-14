@@ -1,2 +1,6 @@
 ./server/bin
+bkp
+.vscode
+.git
+.gitignore
 ./server/Migrations

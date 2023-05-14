@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 type gameCardTypes = {
   title: string,
   price: number,
@@ -19,24 +21,22 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
           <img
             // src={require(image).default}
             src={image}
-            // className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+            className="h-full w-full object-cover object-center lg:h-full lg:w-full"
           />
-          
           {/* {game.myImages.length !== 0 ? <p className='text-red-500'> game.myImages[0].fileName</p> : ""} */}
         </div>
-        
         <div className="p-1 flex flex-col gap-y-1">
           <div className="flex justify-between items-baseline">
             <div>
               <h3 className="text-lg font-semibold text-gray-700">
-                <a href="#">
+                <Link to={`/games/one/${id}`}>
                   <span aria-hidden="true" className="absolute inset-0"></span>
                   {title}
-                </a>
+                </Link>
               </h3>
             </div>
             <p className="text-sm font-medium text-gray-900">{price}DT</p>
-            <h1>{image}</h1>
+
           </div>
           <div className="flex items-center">
             <img className="w-10 h-10 rounded-full mr-4" src={avatar} alt={avatar} />
@@ -46,9 +46,10 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
             </div>
           </div>
           <p className="text-sm truncate">{description}</p>
+          <p className="text-sm truncate">{description}</p>
         </div>
 
-      </div>
+      </div >
     </>
 
 

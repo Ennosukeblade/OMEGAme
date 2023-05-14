@@ -17,22 +17,21 @@ public class Game
     public string Title { get; set; }
     [Required]
     public string Genre { get; set; }
-    public string Path { get; set; } 
+    public string Path { get; set; }
     [Required]
-    [Range(0.00,int.MaxValue)]
+    [Range(0.00, int.MaxValue)]
     public double Price { get; set; } = 0.0;
     [Required]
     public string Description { get; set; }
-    public bool isPlayable { get; set; }=false;
+    public bool isPlayable { get; set; } = false;
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     // * Comments In Game 
-    public List<Comment> InGameComments {get;set;} = new List<Comment>();
-
+    public List<Comment> MyComments { get; set; } = new List<Comment>();
+    // *  Game In GameJam 
+    public List<InGameJam> GameInGameJams { get; set; } = new List<InGameJam>();
     // *  Game Have images
-    public List<Image> MyImages {get;set;} = new List<Image>();
-    // *  Game Have images
-    public List<Vote> GameVotes {get;set;} = new List<Vote>();
+    public List<Image> MyImages { get; set; } = new List<Image>();
 
 }
