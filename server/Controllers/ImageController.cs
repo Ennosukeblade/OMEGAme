@@ -36,32 +36,52 @@ namespace server.Controllers
         [HttpPost("{id}")]
         public async Task<ActionResult<Image>> CreateImage(IFormFile image, int id)
         {
-            Game? Game = await _context.Games.FindAsync(id);
+            Game? game = await _context.Games.FindAsync(id);
 
-
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" }; // Add more if needed
-            var extension = Path.GetExtension(image.FileName).ToLower();
-            if (!allowedExtensions.Contains(extension))
+            if (image == null || image.Length == 0)
             {
-                return BadRequest("Invalid file type. Allowed file types are: " + string.Join(", ", allowedExtensions));
+                return NotFound(); // Return appropriate response if the game with the given id is not found
             }
-            if (image != null && image.Length > 0)
-            {
-                var fileName = Path.GetFileName(image.FileName);
-                var filePath = Path.Combine("wwwroot", "uploads", Game.GameId.ToString(), "images", fileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+            if (image != null)
+            {
+
+
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" }; // Add more if needed
+
+                Console.WriteLine(image.FileName);
+                var extension = Path.GetExtension(image.FileName).ToLower();
+
+                if (!allowedExtensions.Contains(extension))
                 {
-                    await image.CopyToAsync(fileStream);
+                    return BadRequest("Invalid file type. Allowed file types are: " + string.Join(", ", allowedExtensions));
                 }
-                var NewImage = new Image { GameId = Game.GameId, FileName = filePath };
-                _context.Images.Add(NewImage);
-                await _context.SaveChangesAsync();
-                return  StatusCode(200,CreatedAtAction(nameof(Image), new { id = NewImage.ImageId }, NewImage));
+
+                if (image.Length > 0)
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    if (System.IO.File.Exists(Path.Combine("E:/OMEGAme/server/wwwroot","uploads",id.ToString(), "images")))
+                    {
+                        Directory.CreateDirectory(Path.Combine("E:/OMEGAme/server/wwwroot","uploads",id.ToString(), "images"));
+                    }
+                    
+                    var filePath = Path.Combine("E:/OMEGAme/server/wwwroot","uploads",id.ToString(), "images", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await image.CopyToAsync(fileStream);
+                    }
+
+                    var newImage = new Image { GameId = game.GameId, FileName = filePath };
+
+                    _context.Images.Add(newImage);
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok("Images uploaded successfully");
             }
 
-            return BadRequest("No image was uploaded");
-
+            return BadRequest("No images were uploaded");
         }
         //* DELETE: api/Image/{id}
         [HttpDelete("{id}")]

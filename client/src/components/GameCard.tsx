@@ -46,6 +46,7 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
             </div>
           </div>
           <p className="text-sm truncate">{description}</p>
+          <p className="text-sm truncate">{description}</p>
         </div>
 
       </div >
