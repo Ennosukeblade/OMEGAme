@@ -20,7 +20,7 @@ public class GameJam
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
     // * GameJam have InGameJam 
-    public List<InGameJam> MyInGameJams {get;set;} = new List<InGameJam>();
+    public List<Game> MyInGames {get;set;} = new List<Game>();
     // * Reward in GameJam
     public List<Reward> RewardInGameJam {get;set;} = new List<Reward>();
 

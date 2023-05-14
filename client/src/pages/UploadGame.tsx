@@ -31,26 +31,19 @@ export const UploadGame = () => {
     "Massively multiplayer online",
   ];
   const [game, setGame] = useState<IGame>({
-    UserId:10,
+    UserId: 1,
     Title: "",
     Genre: "",
     Price: 0,
     Description: "",
     isPlayable: false,
-    Path:"E:/OMEGAme/server/wwwroot" 
+    Path: "E:/OMEGAme/server/wwwroot",
   });
   const [formData, setFormData] = useState<FormData | null>(null);
   const handleFileUpload = async (file: File) => {
     const data = new FormData();
     data.append("file", file);
     setFormData(data);
-
-
-    // if (response.ok) {
-    //   console.log("File uploaded successfully");
-    // } else {
-    //   console.error("Failed to upload file");
-    // }
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -59,27 +52,61 @@ export const UploadGame = () => {
       handleFileUpload(file);
     }
   };
+
+  //const [formDataList, setFormDataList] = useState<FormData[]>([]);
+  const [images, setImages] = useState<FileList | null>(null);
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setImages(event.target.files);
+
+      // Append each file to the FormDataList
+      // const formDataImage = new FormData();
+      // const newFormDataList = filesArray.map((file) => {
+      //   formDataImage.append("file", file);
+
+
+      //   return formDataImage;
+      // });
+      // setFormDataList(newFormDataList);
+    }
+  };
   const handleChange = (e: ChangeEvent) => {
     e.preventDefault();
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
     setGame({ ...game, [name]: value });
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
       .post("https://localhost:7223/api/game", game)
       .then((response) => {
         if (response.status === 200) {
-            
-            const gameId = response.data.value.gameId;
-          // *Make another POST request here
+          const gameId = response.data.value.gameId;
+          // *Make another POST request here for game file
+          console.log(formData)
           axios
             .post(`https://localhost:7223/api/Game/upload/${gameId}`, formData)
             .then((response) => {
-                console.log("File uploaded successfully",response.data);
+              console.log("File uploaded successfully", response.data);
             })
             .catch((error) => {
-                console.log("❌ ERROR from server", error);
+              console.log("❌ ERROR from server: GAME FILE", error);
+            });
+          // *Make another POST request here for images
+          //console.log("Form Data List:", images);
+          const headers = {
+            "Content-Type": "multipart/form-data",
+          };
+          axios
+            .post(`https://localhost:7223/api/Image/${gameId}`, images, {
+              headers,
+            })
+            .then((response) => {
+              console.log("File uploaded successfully", response.data);
+            })
+            .catch((error) => {
+              console.log("❌ ERROR from server", error);
             });
         } else {
           // Handle other response statuses here
@@ -96,7 +123,7 @@ export const UploadGame = () => {
             UI Design Prototype
             Link : https://dribbble.com/shots/10452538-React-UI-Components */}
 
-      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-1">
+      <div className="min-h-screen py-6 flex flex-col justify-center sm:py-1">
         <div className="relative py-2 sm:max-w-xl sm:mx-auto">
           <div className="relative px-4 py-5 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-5">
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
@@ -121,7 +148,6 @@ export const UploadGame = () => {
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Event title"
                     name="Title"
-                    
                     onChange={handleChange}
                   />
                 </div>
@@ -146,7 +172,6 @@ export const UploadGame = () => {
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Leave it empty if free"
                     name="Price"
-                    
                     onChange={handleChange}
                   />
                 </div>
@@ -168,12 +193,29 @@ export const UploadGame = () => {
                   />
                 </div>
                 <div className="flex flex-col">
+                  <label className="leading-loose">Upload Images:</label>
+                  <p className="text-sm pb-1">You can only upload 5 images</p>
+                  <input
+                    type="file"
+                    multiple
+                    onChange={handleImageChange}
+                    className="block w-full text-sm text-slate-500
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-full file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-violet-50
+                                        hover:file:bg-violet-100"
+                  />
+                </div>
+
+                <div className="flex flex-col">
                   <label className="leading-loose">Description</label>
                   <textarea
                     rows={4}
                     className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     name="Description"
-                    onChange={handleChange}></textarea>
+                    onChange={handleChange}
+                  ></textarea>
                 </div>
                 {/* <div className="flex items-center space-x-4">
                                         <div className="flex flex-col">
