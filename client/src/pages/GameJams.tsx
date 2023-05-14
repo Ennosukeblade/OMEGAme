@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import bgImage from "../assets/img/gameJam.png";
 import OneGameJam from '../components/OneGameJam';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
 const products = [
     {
         id: 1,
