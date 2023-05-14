@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameCard from './GameCard'
 import image from '../assets/img/wp7471860.jpg'
-import GameCard from './GameCard'
-import image from '../assets/img/wp7471860.jpg'
 
 // interface Igame {
 //     GameId: number
