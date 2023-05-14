@@ -28,9 +28,9 @@ public class Game
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     // * Comments In Game 
-    public List<Comment> MyComments { get; set; } = new List<Comment>();
+    public List<Comment> InGameComments { get; set; } = new List<Comment>();
     // *  Game In GameJam 
-    public List<InGameJam> GameInGameJams { get; set; } = new List<InGameJam>();
+    public List<Vote> GameVotes { get; set; } = new List<Vote>();
     // *  Game Have images
     public List<Image> MyImages { get; set; } = new List<Image>();
 
