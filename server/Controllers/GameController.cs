@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 using server.Models;
 using Microsoft.VisualBasic.FileIO;
-
+using System.Net;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
 namespace server.Controllers
 {
     [Route("api/[controller]")]
@@ -12,13 +16,47 @@ namespace server.Controllers
     {
         private readonly MyContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly ILogger<GameController> _logger;
 
-        public GameController(MyContext context, IWebHostEnvironment hostingEnvironment)
+        public GameController(MyContext context, IWebHostEnvironment hostingEnvironment, ILogger<GameController> logger)
         {
             _hostingEnvironment = hostingEnvironment;
             _context = context;
+            _logger = logger;
         }
 
+        [HttpGet("download/{id}")]
+        public FileResult DownloadFolder(int id)
+        {
+            Game? Game = _context.Games.FirstOrDefault(u => u.GameId == id);
+            // Replace 'folderPath' with the actual path of your folder
+            string folderPath = Game.Path;
+            string zipFileName = Game.Title + ".zip";
+            string zipPath = Path.Combine(Path.GetTempPath(), "downloaded-folder.zip");
+
+
+            if (System.IO.File.Exists(zipPath))
+            {
+                System.IO.File.Delete(zipPath);
+            }
+
+            ZipFile.CreateFromDirectory(folderPath, zipPath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+
+            var fileContent = new ByteArrayContent(fileBytes);
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = fileContent
+            };
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = Game.Title + ".zip"
+            };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+
+            return File(fileBytes, "application/zip", Game.Title + ".zip");
+
+        }
         // GET: api/game
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
@@ -29,7 +67,7 @@ namespace server.Controllers
 
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGameById(int id)
+        public async Task<ActionResult<Game>> GetGameId(int id)
         {
             Game? game = await _context.Games.Include(u => u.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).FirstOrDefaultAsync(u => u.GameId == id);
             if (game == null)
@@ -121,6 +159,43 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<Game>> GetGameById(int id)
+        {
+            Game? game = await _context.Games.FirstOrDefaultAsync(u => u.GameId == id);
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            // Modify the game object to include the URL/path to the WebGL files
+            game.Path = Url.Action("PlayGame", new { id = game.GameId });
+            game.Path = "https://localhost:7223"+ game.Path;
+            return Ok(game);
+        }
+        [HttpGet("play/{id}")]
+        public IActionResult PlayGame(int id)
+        {
+            Game? game = _context.Games.FirstOrDefault(u => u.GameId == id);
+            if (game == null || string.IsNullOrEmpty(game.Path))
+            {
+                return NotFound();
+            }
+
+            // Construct the path to the index.html file of the game
+            string indexPath = Path.Combine(game.Path, "index.html");
+
+            if (System.IO.File.Exists(indexPath))
+            {
+                // Read the content of the index.html file
+                string htmlContent = System.IO.File.ReadAllText(indexPath);
+
+                // Return the HTML content as a response
+                return Content(htmlContent, "text/html");
+            }
+
+            return NotFound();
         }
     }
 }

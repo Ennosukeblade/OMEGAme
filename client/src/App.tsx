@@ -19,7 +19,6 @@ function App() {
         <ScrollToTopNavigator>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/games' element={<AllGames />} />
             <Route path='/games/upload' element={<UploadGame />} />
             <Route path='/games/one/:id' element={<OneGame />} />
             <Route path='/assets' element={<Assets />} />

@@ -61,8 +61,7 @@ const NavBar = () => {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                <NavLink to={'/'} className={linkStyle}><p className="drop-shadow-md">Home</p></NavLink>
-                <NavLink to={'/games'} className={linkStyle}><p className="drop-shadow-md">Games</p></NavLink>
+                <NavLink to={'/'} className={linkStyle}><p className="drop-shadow-md">Games</p></NavLink>
                 <NavLink to={'/assets'} className={linkStyle}><p className="drop-shadow-md">Assets</p></NavLink>
                 <NavLink to={'/gamejams'} className={linkStyle}><p className="drop-shadow-md">Game Jams</p></NavLink>
               </div>
