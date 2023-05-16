@@ -85,42 +85,26 @@ function classNames(...classes: any[]) {
 
 export default function OneGame() {
   const { id } = useParams<Params<string>>();
-
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-  const [oneGame, setOneGame] = useState<any>({});
-  const [gamePath, setGamePath] = useState("");
-
+  const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const [oneGame, setOneGame] = useState<any>({})
   useEffect(() => {
-    axios
-      .get("https://localhost:7223/api/Game/" + id)
-      .then((response) => {
+    axios.get("https://localhost:7223/api/Game/" + id)
+      .then(response => {
         console.log(response.data);
-        setOneGame(response.data);
-        setGamePath(response.data.path.replace(/\\/g, '/')+"/index.html")
+        setOneGame(response.data)
       })
-      .catch((err) => console.log(err));
-  }, []);
-  const handleDownload = () => {
-    // Replace '/api/download-folder' with the actual URL or route to your ASP.NET controller action
-    window.open(`https://localhost:7223/api/game/download/${id}`, "_blank");
-  };
-  
+      .catch(err => console.log(err))
+  }, [])
   return (
     <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol
-            role="list"
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
+          <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
-                  <a
-                    href={breadcrumb.href}
-                    className="mr-2 text-sm font-medium text-gray-900"
-                  >
+                  <a href={breadcrumb.href} className="mr-2 text-sm font-medium text-gray-900">
                     {breadcrumb.name}
                   </a>
                   <svg
@@ -137,11 +121,7 @@ export default function OneGame() {
               </li>
             ))}
             <li className="text-sm">
-              <a
-                href={product.href}
-                aria-current="page"
-                className="font-medium text-gray-500 hover:text-gray-600"
-              >
+              <a href={product.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
                 {product.name}
               </a>
             </li>
@@ -185,38 +165,30 @@ export default function OneGame() {
         {/* Product info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {oneGame.title}
-            </h1>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{oneGame.title}</h1>
           </div>
 
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Game information</h2>
-            {oneGame.price == 0 ? (
-              <p className="text-3xl tracking-tight text-gray-900">Free</p>
-            ) : (
-              <p className="text-3xl tracking-tight text-gray-900">
-                {oneGame.price} TND
-              </p>
-            )}
+            <p className="text-3xl tracking-tight text-gray-900">{oneGame.price} TND</p>
 
             <form className="mt-10">
               <button
-                onClick={handleDownload}
+                type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Download
               </button>
             </form>
-            {oneGame.isPlayable?<form className="mt-10">
+            <form className="mt-10">
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Play in Browser
               </button>
-            </form>:<></>}
+            </form>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -228,16 +200,31 @@ export default function OneGame() {
                 <p className="text-base text-gray-900">{oneGame.description}</p>
               </div>
             </div>
-                {/* <p>{gamePath} </p>
-            {oneGame.isPlayable ? (
-            <iframe src={gamePath} title={oneGame.title} width="800" height="600"></iframe>
-          ) : (
-            <p>This game is not playable.</p>
-          )} */}
-          <iframe src={gamePath} title={oneGame.title} width="980" height="650"></iframe>
+
+            {/* <div className="mt-10">
+                            <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
+
+                            <div className="mt-4">
+                                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
+                                    {product.highlights.map((highlight) => (
+                                        <li key={highlight} className="text-gray-400">
+                                            <span className="text-gray-600">{highlight}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div> */}
+
+            {/* <div className="mt-10">
+                            <h2 className="text-sm font-medium text-gray-900">Details</h2>
+
+                            <div className="mt-4 space-y-6">
+                                <p className="text-sm text-gray-600">{product.details}</p>
+                            </div>
+                        </div> */}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

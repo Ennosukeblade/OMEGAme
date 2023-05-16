@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameCard from './GameCard'
-import image from '../assets/img/wp7471860.jpg'
+//import image from 'https://localhost:7223/uploads/6/images/wp7471860.jpg'
 
 // interface Igame {
 //     GameId: number
@@ -13,6 +13,8 @@ import image from '../assets/img/wp7471860.jpg'
 // }
 const Games = () => {
     const path: string = "../../../server/"
+    const image: string = "https://localhost:7223/uploads/6/images/wp7471860.jpg"
+
     //const path: string = "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\"
 
     const products = [
@@ -166,7 +168,10 @@ const Games = () => {
         const fetchGames = async () => {
 
             await axios.get("https://localhost:7223/api/Game")
-                .then(response => setGames(response.data))
+                .then(response => {
+                    setGames(response.data)
+                    console.log(response.data);
+                })
                 .catch(err => console.log(err))
         }
         fetchGames()
@@ -185,15 +190,15 @@ const Games = () => {
                             id={game.gameId}
                             title={game.title}
                             price={game.price}
-                            image={image}
+                            image={game.myImages[0].fileName}
                             creator={game.creator.firstName + " " + game.creator.lastName}
-                            avatar='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT93ATNDzBpB63bYDVaL_DL4UXpH_5t0CBZ-UBFrMLfdvLbczdV'
+                            avatar={`https://ui-avatars.com/api/?background=ae369e&color=fff&name=${game.creator.firstName}+${game.creator.lastName}`}
                             date={game.createdAt}
                             description={game.description}
                         />
 
                         {/* <p>{path + game.myImages[0].fileName.replace(/\\/g, '/')}</p> */}
-                        {/* <img src={require("../../../server/wwwroot/uploads/20/images/image.png")} alt="" /> */}
+                        {/* <img src={image} alt="" /> */}
                     </div>
                 }
 

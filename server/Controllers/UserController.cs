@@ -61,7 +61,7 @@ namespace server.Controllers
                 {
                     return Unauthorized("Invalid Email/Password");
                 }
-                HttpContext.Session.SetInt32("userId", UserFromDb.UserId);
+                //HttpContext.Session.SetInt32("userId", UserFromDb.UserId);
                 return Ok(UserFromDb);
             }
             return BadRequest();
@@ -89,6 +89,8 @@ namespace server.Controllers
                     // Save
                     await _context.SaveChangesAsync();
                     HttpContext.Session.SetInt32("userId", NewUser.UserId);
+                    return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
+
                     return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
                 }
             }

@@ -150,7 +150,7 @@ export const UploadGame = () => {
             UI Design Prototype
             Link : https://dribbble.com/shots/10452538-React-UI-Components */}
 
-      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-1">
+      <div className="py-6 flex flex-col justify-center sm:py-1">
         <div className="relative py-2 sm:max-w-xl sm:mx-auto">
           <div className="relative px-4 py-5 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-5">
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
