@@ -184,13 +184,13 @@ const Games = () => {
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
                 {/* <p>{JSON.stringify(games[0]}</p> */}
                 {games.map((game) => {
-                    // console.log(path + game.myImages[0].fileName.replace(/\\/g, '/'))
+                    // console.log(path + game.myImages[0].fileName.rplace(/\\/g, '/'))
                     return <div key={game.gameId}>
                         <GameCard
                             id={game.gameId}
                             title={game.title}
                             price={game.price}
-                            image={game.myImages[0].fileName}
+                            image={game.myImages[0]?.fileName}
                             creator={game.creator.firstName + " " + game.creator.lastName}
                             avatar={`https://ui-avatars.com/api/?background=ae369e&color=fff&name=${game.creator.firstName}+${game.creator.lastName}`}
                             date={game.createdAt}
