@@ -16,7 +16,6 @@ namespace server.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
             _context = context;
-            _hostingEnvironment = hostingEnvironment;
         }
         //* GET: api/Image
         [HttpGet]
@@ -63,12 +62,12 @@ namespace server.Controllers
                 if (image.Length > 0)
                 {
                     var fileName = Path.GetFileName(image.FileName);
-                    if (System.IO.File.Exists(Path.Combine("E:/OMEGAme/server/wwwroot", "uploads", id.ToString(), "images")))
+                    if (!System.IO.File.Exists(Path.Combine(_hostingEnvironment.WebRootPath, "uploads", id.ToString(), "images")))
                     {
-                        Directory.CreateDirectory(Path.Combine("E:/OMEGAme/server/wwwroot", "uploads", id.ToString(), "images"));
+                        Directory.CreateDirectory(Path.Combine(_hostingEnvironment.WebRootPath, "uploads", id.ToString(), "images"));
                     }
 
-                    var filePath = Path.Combine("E:/OMEGAme/server/wwwroot", "uploads", id.ToString(), "images", fileName);
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", id.ToString(), "images", fileName);
 
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
