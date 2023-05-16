@@ -55,7 +55,7 @@ const OneGameJam = ({
       <div className="flex items-start justify-around">
         <div className=" min-h-80 aspect-h-1 aspect-w-1 w-20 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-20">
           <img
-            src="https://i.pinimg.com/564x/dc/c9/9f/dcc99fc7e408573b86c8beb0cc817df4.jpg"
+            src={image}
             alt="Game Jam image"
             className=" object-cover object-center h-20 w-20"
           />
