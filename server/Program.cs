@@ -1,5 +1,7 @@
 // Additional libraries
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,12 +43,20 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthorization();
+// access to files outside the client
+app.UseFileServer(enableDirectoryBrowsing: true);
+app.UseDefaultFiles();
 
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".data"] = "application/octet-stream";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider,
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "application/octet-stream",
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+});
 app.MapControllers();
-
 app.Run();
-
-
-
-
-

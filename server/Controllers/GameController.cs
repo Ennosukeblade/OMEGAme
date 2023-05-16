@@ -18,11 +18,13 @@ namespace server.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger<GameController> _logger;
 
+
         public GameController(MyContext context, IWebHostEnvironment hostingEnvironment, ILogger<GameController> logger)
         {
             _hostingEnvironment = hostingEnvironment;
             _context = context;
             _logger = logger;
+            
         }
 
         [HttpGet("download/{id}")]
@@ -110,12 +112,13 @@ namespace server.Controllers
             FileSystem.RenameDirectory(oldPath, folderName);
             System.Console.WriteLine(oldPath);
 
+             var hostUrl = $"{Request.Scheme}://{Request.Host.Value}";
             //* Update Game
-            var newPath = Path.Combine(extractionPath, folderName);
-            Directory.CreateDirectory(Path.Combine(newPath, "images"));
+            var newPath = Path.Combine(hostUrl,"uploads", folderName);
+            Directory.CreateDirectory(Path.Combine(extractionPath,id.ToString(), "images"));
             newGame.Path = newPath;
             // Find the index.html file
-            var indexHtmlPath = Path.Combine(newPath, "index.html");
+            var indexHtmlPath = Path.Combine(Path.Combine(extractionPath,id.ToString()), "index.html");
             if (System.IO.File.Exists(indexHtmlPath))
 
             {
@@ -159,43 +162,6 @@ namespace server.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-        [HttpGet("get/{id}")]
-        public async Task<ActionResult<Game>> GetGameById(int id)
-        {
-            Game? game = await _context.Games.FirstOrDefaultAsync(u => u.GameId == id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            // Modify the game object to include the URL/path to the WebGL files
-            game.Path = Url.Action("PlayGame", new { id = game.GameId });
-            game.Path = "https://localhost:7223"+ game.Path;
-            return Ok(game);
-        }
-        [HttpGet("play/{id}")]
-        public IActionResult PlayGame(int id)
-        {
-            Game? game = _context.Games.FirstOrDefault(u => u.GameId == id);
-            if (game == null || string.IsNullOrEmpty(game.Path))
-            {
-                return NotFound();
-            }
-
-            // Construct the path to the index.html file of the game
-            string indexPath = Path.Combine(game.Path, "index.html");
-
-            if (System.IO.File.Exists(indexPath))
-            {
-                // Read the content of the index.html file
-                string htmlContent = System.IO.File.ReadAllText(indexPath);
-
-                // Return the HTML content as a response
-                return Content(htmlContent, "text/html");
-            }
-
-            return NotFound();
         }
     }
 }

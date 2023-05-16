@@ -9,6 +9,8 @@ import OneGame from './components/OneGame';
 import ScrollToTopNavigator from './components/ScrollToTopNavigator';
 import Assets from './pages/Assets';
 import GameJams from './pages/GameJams';
+import OneGameJam from './components/GameJamCard';
+import OneGameJamPage from './pages/OneGameJamPage';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path='/games/one/:id' element={<OneGame />} />
             <Route path='/assets' element={<Assets />} />
             <Route path='/gamejams' element={<GameJams />} />
+            {/* <Route path='/OneGameJam/:id' element={<OneGameJam />} /> */}
+            <Route path='/OneGameJam/:id' element={<OneGameJamPage/>}></Route>
           </Routes>
         </ScrollToTopNavigator>
 

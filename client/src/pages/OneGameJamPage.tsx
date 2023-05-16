@@ -1,30 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Params, useParams } from "react-router-dom";
 import axios from "axios";
-interface IUser {
-    userId: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    avatar: string;
-    createdAt: string;
-    updatedAt: string;
-  }
-  interface IGameJam {
-    gameJamId: number;
-    userId: number;
-    creator: IUser;
-    title: string;
-    description: string;
-    image: string;
-    startDate: string;
-    endDate: string;
-    votingEndDate: string;
-    createdAt: string;
-    updatedAt: string;
-  }
-const OneGameJam = () => {
+
+const OneGameJamPage = () => {
     const { id } = useParams<Params<string>>();
     const [oneGameJam, setOneGameJam] = useState<any>({});
     useEffect(() => {
@@ -103,4 +81,4 @@ const OneGameJam = () => {
   );
 };
 
-export default OneGameJam;
+export default OneGameJamPage

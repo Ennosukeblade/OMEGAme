@@ -90,27 +90,14 @@ export default function OneGame() {
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [oneGame, setOneGame] = useState<any>({});
   const [gamePath, setGamePath] = useState("");
-  useEffect(() => {
-    const fetchGame = async () => {
-      try {
-        const response = await axios.get(`https://localhost:7223/api/game/get/`+id);
-        setOneGame(response.data);
-        console.log(response.data)
-        setGamePath(response.data.path.replace(/\\/g, '/'))
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    fetchGame();
-  }, [oneGame.gameId]);
   useEffect(() => {
     axios
       .get("https://localhost:7223/api/Game/" + id)
       .then((response) => {
         console.log(response.data);
-        setOneGame("https://localhost:7223"+response.data);
-        
+        setOneGame(response.data);
+        setGamePath(response.data.path.replace(/\\/g, '/')+"/index.html")
       })
       .catch((err) => console.log(err));
   }, []);
@@ -222,14 +209,14 @@ export default function OneGame() {
                 Download
               </button>
             </form>
-            <form className="mt-10">
+            {oneGame.isPlayable?<form className="mt-10">
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Play in Browser
               </button>
-            </form>
+            </form>:<></>}
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -247,7 +234,7 @@ export default function OneGame() {
           ) : (
             <p>This game is not playable.</p>
           )} */}
-          <iframe src="https://incredible-meringue-8ae046.netlify.app/" title={oneGame.title} width="1920" height="1080"></iframe>
+          <iframe src={gamePath} title={oneGame.title} width="980" height="650"></iframe>
           </div>
         </div>
       </div>
