@@ -84,8 +84,10 @@ export default function OneGame() {
                 <p className="text-base text-gray-900">{oneGame.description}</p>
               </div>
             </div>
+            <div className="w-96">
+              <iframe src={oneGame.path} title={oneGame.title} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
 
-            {/* <iframe src="https://localhost:7223/uploads/21/index.html" title={oneGame.title} width="1600" height="900"></iframe> */}
           </div>
         </div>
       </div>
