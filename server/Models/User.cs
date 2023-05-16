@@ -8,7 +8,7 @@ public class User
     // ---------------------ID--------------------------
     [Key]
     public int UserId { get; set; }
-
+    
     // ---------------------FirstName------------------------------------
     [Required(ErrorMessage ="FirstName is required !!!!!!!")]
     [MinLength(2, ErrorMessage ="FirstName must be at least 2 ❌❌❌")]

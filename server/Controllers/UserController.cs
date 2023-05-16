@@ -89,10 +89,25 @@ namespace server.Controllers
                     // Save
                     await _context.SaveChangesAsync();
                     HttpContext.Session.SetInt32("userId", NewUser.UserId);
-                    return StatusCode(200,CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
+                    return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
                 }
             }
             return BadRequest();
         }
+        //* POST: api/User/Register
+        // [HttpPost("join/jam/{id}/{jamId}")]
+        // public async Task<ActionResult<User>> JoinJam(int id, int jamId)
+        // {
+
+        //     User? currentUser = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==id);
+        //     // Add
+        //     currentUser.Gam
+        //     // Save
+        //     await _context.SaveChangesAsync();
+        //     HttpContext.Session.SetInt32("userId", NewUser.UserId);
+        //     return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
+
+        // }
+
     }
 }

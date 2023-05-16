@@ -3,6 +3,7 @@ import bgImage from "../assets/img/gameJam.png";
 import OneGameJam from '../components/GameJamCard';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { Link } from 'react-router-dom';
 
 const GameJams = () => {
     const currentDate = new Date().toISOString().split('T')[0];
@@ -69,9 +70,11 @@ const GameJams = () => {
                         create games.Join to prototype ideas, showcase skills, and be part
                         of a vibrant community.
                     </p>
+                    <Link to={"/HostJam"}>
                     <button className="rounded-full bg-green-500 h-10 px-5 hover:bg-green-600 text-white font-medium">
                         Host a Jam
                     </button>
+                    </Link>
                 </div>
             </div>
             <div className=" container mx-auto max-w-2xl p-4 sm:px-4 lg:max-w-7xl lg:p-4 bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-md mt-9">
@@ -221,7 +224,9 @@ const GameJams = () => {
                                 endDate={gameJam.endDate}
                                 votingEndDate={gameJam.votingEndDate}
                                 createdAt={gameJam.createdAt}
-                                updatedAt={gameJam.updatedAt} />
+                                updatedAt={gameJam.updatedAt}
+                                
+                                />
                         ))}
                     </div>
                     </div>

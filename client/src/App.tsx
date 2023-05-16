@@ -11,6 +11,7 @@ import Assets from './pages/Assets';
 import GameJams from './pages/GameJams';
 import OneGameJam from './components/GameJamCard';
 import OneGameJamPage from './pages/OneGameJamPage';
+import HostJam from './pages/HostJam';
 
 function App() {
   return (
@@ -21,12 +22,13 @@ function App() {
         <ScrollToTopNavigator>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/games/upload' element={<UploadGame />} />
+            <Route path='/games/upload/:id' element={<UploadGame  />} />
             <Route path='/games/one/:id' element={<OneGame />} />
             <Route path='/assets' element={<Assets />} />
             <Route path='/gamejams' element={<GameJams />} />
             {/* <Route path='/OneGameJam/:id' element={<OneGameJam />} /> */}
-            <Route path='/OneGameJam/:id' element={<OneGameJamPage/>}></Route>
+            <Route path='/OneGameJam/:id' element={<OneGameJamPage/>}/>
+            <Route path='/HostJam' element={<HostJam/>}/>
           </Routes>
         </ScrollToTopNavigator>
 

@@ -26,13 +26,20 @@ namespace server.Controllers
             _logger = logger;
             
         }
-
+        [HttpGet("gameJam/games/{id}")]
+        public async Task<ActionResult<Game>> GetGameJamGames(int id)
+        {
+            List <Game> GameJamGames = await _context.Games.Include(c=>c.MyImages).Include(c=>c.Creator).Where(j=>j.GameJamId == id).ToListAsync();
+            
+            return StatusCode(200,GameJamGames);
+        }
+        //* POST: api/GameJam
         [HttpGet("download/{id}")]
         public FileResult DownloadFolder(int id)
         {
             Game? Game = _context.Games.FirstOrDefault(u => u.GameId == id);
             // Replace 'folderPath' with the actual path of your folder
-            string folderPath = Game.Path;
+            string folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads",id.ToString());
             string zipFileName = Game.Title + ".zip";
             string zipPath = Path.Combine(Path.GetTempPath(), "downloaded-folder.zip");
 

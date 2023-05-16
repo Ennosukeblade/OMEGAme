@@ -21,6 +21,7 @@ interface IGameJam {
   votingEndDate: string;
   createdAt: string;
   updatedAt: string;
+  
 }
 const OneGameJam = ({
   gameJamId,
