@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
-
+import { Params, useParams } from "react-router-dom";
 
 interface IGame {
   UserId: number;
@@ -10,6 +10,7 @@ interface IGame {
   Description: string;
   isPlayable: boolean;
   Path: string;
+  GameJamId: string ;
 }
 export const UploadGame = () => {
   const videoGameGenres = [
@@ -31,15 +32,26 @@ export const UploadGame = () => {
     "Survival",
     "Massively multiplayer online",
   ];
-  const [game, setGame] = useState<IGame>({
-    UserId: 1,
-    Title: "",
-    Genre: "",
-    Price: 0,
-    Description: "",
-    isPlayable: false,
-    Path: "E:/OMEGAme/server/wwwroot",
-  });
+  const { id } = useParams<Params<string>>();
+  const [game, setGame] = useState<any>({
+      UserId: 1,
+      Title: "",
+      Genre: "",
+      Price: 0,
+      Description: "",
+      isPlayable: false,
+      Path: "E:/OMEGAme/server/wwwroot",
+    });
+    useEffect(() => {
+      if (id != "0") {
+        console.log("anything here")
+        setGame({...game, GameJamId:id})
+      }
+    }, []);
+    
+  
+
+
   const [formData, setFormData] = useState<FormData | null>(null);
   const handleFileUpload = async (file: File) => {
     const data = new FormData();
@@ -68,7 +80,7 @@ export const UploadGame = () => {
   //     handleImageUpload(file);
   //   }
   // };
-  const [images, setImages] = useState<File>(new File([], ''));
+  const [images, setImages] = useState<File>(new File([], ""));
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setImages(event.target.files[0]);
@@ -78,48 +90,58 @@ export const UploadGame = () => {
     e.preventDefault();
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
     setGame({ ...game, [name]: value });
+    
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     try {
       // Step 1: Create the game
-      const gameResponse = await axios.post("https://localhost:7223/api/game", game);
+      const gameResponse = await axios.post(
+        "https://localhost:7223/api/game",
+        game
+      );
       if (gameResponse.status === 200) {
         const gameId = gameResponse.data.value.gameId;
+
         // *Make another POST request here for game file
-        console.log(formData);
-        const gameUploadResponse = await axios
-          .post(`https://localhost:7223/api/Game/upload/${gameId}`, formData)
+        console.log(game);
+        const gameUploadResponse = await axios.post(
+          `https://localhost:7223/api/Game/upload/${gameId}`,
+          formData
+        );
         if (gameUploadResponse.status === 200) {
-          console.log("Game file uploaded successfully", gameUploadResponse.data);
+          console.log(
+            "Game file uploaded successfully",
+            gameUploadResponse.data
+          );
         }
         const headers = {
           "Content-Type": "multipart/form-data",
         };
-        console.log(images)
+        console.log(images);
 
         const imageFormData = new FormData();
         imageFormData.append("image", images);
-        console.log(imageFormData)
+        console.log(imageFormData);
 
-        const imageUploadResponse = await axios
-          .post(`https://localhost:7223/api/Image/${gameId}`, imageFormData, { headers },)
+        const imageUploadResponse = await axios.post(
+          `https://localhost:7223/api/Image/${gameId}`,
+          imageFormData,
+          { headers }
+        );
         if (gameResponse.status === 200) {
           console.log("Image uploaded successfully", imageUploadResponse.data);
         }
 
-
         // *Make another POST request here for images
-
-
       } else {
         // Handle other response statuses here
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log("❌ ERROR from server", error);
-    };
+    }
   };
   return (
     <>
@@ -276,4 +298,3 @@ export const UploadGame = () => {
     </>
   );
 };
-

@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 using server.Models;
 using Microsoft.VisualBasic.FileIO;
-
+using System.Net;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
 namespace server.Controllers
 {
     [Route("api/[controller]")]
@@ -12,13 +16,56 @@ namespace server.Controllers
     {
         private readonly MyContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly ILogger<GameController> _logger;
 
-        public GameController(MyContext context, IWebHostEnvironment hostingEnvironment)
+
+        public GameController(MyContext context, IWebHostEnvironment hostingEnvironment, ILogger<GameController> logger)
         {
             _hostingEnvironment = hostingEnvironment;
             _context = context;
+            _logger = logger;
+            
         }
+        [HttpGet("gameJam/games/{id}")]
+        public async Task<ActionResult<Game>> GetGameJamGames(int id)
+        {
+            List <Game> GameJamGames = await _context.Games.Include(c=>c.MyImages).Include(c=>c.Creator).Where(j=>j.GameJamId == id).ToListAsync();
+            
+            return StatusCode(200,GameJamGames);
+        }
+        //* POST: api/GameJam
+        [HttpGet("download/{id}")]
+        public FileResult DownloadFolder(int id)
+        {
+            Game? Game = _context.Games.FirstOrDefault(u => u.GameId == id);
+            // Replace 'folderPath' with the actual path of your folder
+            string folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads",id.ToString());
+            string zipFileName = Game.Title + ".zip";
+            string zipPath = Path.Combine(Path.GetTempPath(), "downloaded-folder.zip");
 
+
+            if (System.IO.File.Exists(zipPath))
+            {
+                System.IO.File.Delete(zipPath);
+            }
+
+            ZipFile.CreateFromDirectory(folderPath, zipPath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+
+            var fileContent = new ByteArrayContent(fileBytes);
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = fileContent
+            };
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = Game.Title + ".zip"
+            };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+
+            return File(fileBytes, "application/zip", Game.Title + ".zip");
+
+        }
         // GET: api/game
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
@@ -29,7 +76,7 @@ namespace server.Controllers
 
         //* GET: api/Game/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGameById(int id)
+        public async Task<ActionResult<Game>> GetGameId(int id)
         {
             Game? game = await _context.Games.Include(u => u.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).FirstOrDefaultAsync(u => u.GameId == id);
             if (game == null)
@@ -72,12 +119,13 @@ namespace server.Controllers
             FileSystem.RenameDirectory(oldPath, folderName);
             System.Console.WriteLine(oldPath);
 
+             var hostUrl = $"{Request.Scheme}://{Request.Host.Value}";
             //* Update Game
-            var newPath = Path.Combine(extractionPath, folderName);
-            Directory.CreateDirectory(Path.Combine(newPath, "images"));
+            var newPath = Path.Combine(hostUrl,"uploads", folderName);
+            Directory.CreateDirectory(Path.Combine(extractionPath,id.ToString(), "images"));
             newGame.Path = newPath;
             // Find the index.html file
-            var indexHtmlPath = Path.Combine(newPath, "index.html");
+            var indexHtmlPath = Path.Combine(Path.Combine(extractionPath,id.ToString()), "index.html");
             if (System.IO.File.Exists(indexHtmlPath))
 
             {

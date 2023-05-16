@@ -1,50 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import bgImage from "../assets/img/gameJam.png";
-import OneGameJam from '../components/OneGameJam';
+import OneGameJam from '../components/GameJamCard';
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-const products = [
-    {
-        id: 1,
-        name: "Basic Tee",
-        href: "#",
-        imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: "$35",
-        color: "Black",
-    },
-    // More products...
-];
+import { Link } from 'react-router-dom';
 
-// const InComingGameJams = [
-//     {
-//         GameJamId:1,
-//         Creator:{
-//             firstName: "oussama",
-//         },
-//         Title:"OMEGAme Game Jam",
-//         Description: "First Game Jam",
-//         StartDate: "DateTime",
-//         EndDate: "DateTime",
-//         VotingEndDate:"DateTime"
-//     }
-// ]
 const GameJams = () => {
-    const mydate = new Date()
-    const formatedDate = mydate.toLocaleDateString('en-US', { year: "numeric", month: "long", day: "2-digit" })
-    // const [gameJams, setGameJams] = useState<Array<IGameJam>>([]);
+    const currentDate = new Date().toISOString().split('T')[0];
     const [gameJams, setGameJams] = useState<Array<any>>([])
+    const [incomingGameJams, setIncomingGameJams] = useState<Array<any>>([])
+    const [currentGameJams, setCurrentGameJams] = useState<Array<any>>([])
+    const [endedGameJams, setEndedGameJams] = useState<Array<any>>([])
     useEffect(() => {
-        // Perform side effects or data fetching here
-        // This code runs after the component has rendered
-
-        // Example: Fetch data from an API
         fetch('https://localhost:7223/api/GameJam')
-            .then(response => response.json())
-            .then(data => setGameJams(data));
-    }, []); // Empty dependency array to run the effect only once
-
+          .then((response) => response.json())
+          .then((data) => setGameJams(data));
+      }, []);
+    
+      useEffect(() => {
+        const futureGameJams = gameJams.filter((gameJam) => gameJam.startDate > currentDate);
+        setIncomingGameJams(futureGameJams);
+    
+        const presentGameJams = gameJams.filter(
+          (gameJam) => gameJam.startDate < currentDate && gameJam.endDate > currentDate
+        );
+        setCurrentGameJams(presentGameJams);
+    
+        const pastGameJams = gameJams.filter(
+          (gameJam) => gameJam.startDate < currentDate && gameJam.endDate < currentDate && gameJam.votingEndDate > currentDate
+        );
+        setEndedGameJams(pastGameJams);
+      }, [gameJams, currentDate]);
     return (
         <div className="mx-auto ">
             <section className="-mt-16 ">
@@ -84,19 +70,31 @@ const GameJams = () => {
                         create games.Join to prototype ideas, showcase skills, and be part
                         of a vibrant community.
                     </p>
+                    <Link to={"/HostJam"}>
                     <button className="rounded-full bg-green-500 h-10 px-5 hover:bg-green-600 text-white font-medium">
                         Host a Jam
                     </button>
+                    </Link>
                 </div>
             </div>
             <div className=" container mx-auto max-w-2xl p-4 sm:px-4 lg:max-w-7xl lg:p-4 bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-md mt-9">
-                <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                         Incoming Jams
                     </h2>
-
-                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
-                        {gameJams.map((gameJam) => (
+                    {/* Carousel for desktop and large size devices */}
+                <CarouselProvider className="lg:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={4} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {incomingGameJams.map((gameJam) => (
                             <OneGameJam
                                 gameJamId={gameJam.gameJamId}
                                 userId={gameJam.userId}
@@ -111,6 +109,330 @@ const GameJams = () => {
                                 updatedAt={gameJam.updatedAt} />
                         ))}
                     </div>
+                    </div>
+                    </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for tablet and medium size devices */}
+                <CarouselProvider className="lg:hidden md:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={2} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {incomingGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for mobile and Small size Devices */}
+                <CarouselProvider className="block md:hidden " naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={1} step={1} infinite={true} naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full w-full flex lg:gap-8 md:gap-6 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {incomingGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+                </div>
+                <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                        Current Jams
+                    </h2>
+                    {/* Carousel for desktop and large size devices */}
+                <CarouselProvider className="lg:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={4} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {currentGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt}
+                                
+                                />
+                        ))}
+                    </div>
+                    </div>
+                    </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for tablet and medium size devices */}
+                <CarouselProvider className="lg:hidden md:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={2} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {currentGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for mobile and Small size Devices */}
+                <CarouselProvider className="block md:hidden " naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={1} step={1} infinite={true} naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full w-full flex lg:gap-8 md:gap-6 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {currentGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+                </div>
+                <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                        Completed Jams
+                    </h2>
+                    {/* Carousel for desktop and large size devices */}
+                <CarouselProvider className="lg:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={4} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {endedGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                    </div>
+                    </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for tablet and medium size devices */}
+                <CarouselProvider className="lg:hidden md:block hidden" naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={2} step={1} infinite={true}  naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {endedGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
+
+                {/* Carousel for mobile and Small size Devices */}
+                <CarouselProvider className="block md:hidden " naturalSlideWidth={100} isIntrinsicHeight={true} totalSlides={12} visibleSlides={1} step={1} infinite={true} naturalSlideHeight={0}>
+                    <div className="w-full relative flex items-center justify-center">
+                        <ButtonBack role="button" aria-label="slide backward" className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer" id="prev">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1L1 7L7 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonBack>
+                        <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                            <Slider>
+                                <div id="slider" className="h-full w-full flex lg:gap-8 md:gap-6 items-center justify-start transition ease-out duration-700">
+                                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
+                        {endedGameJams.map((gameJam) => (
+                            <OneGameJam
+                                gameJamId={gameJam.gameJamId}
+                                userId={gameJam.userId}
+                                creator={gameJam.creator}
+                                title={gameJam.title}
+                                description={gameJam.description}
+                                image={gameJam.image}
+                                startDate={gameJam.startDate}
+                                endDate={gameJam.endDate}
+                                votingEndDate={gameJam.votingEndDate}
+                                createdAt={gameJam.createdAt}
+                                updatedAt={gameJam.updatedAt} />
+                        ))}
+                    </div>
+                                </div>
+                            </Slider>
+                        </div>
+                        <ButtonNext role="button" aria-label="slide forward" className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400" id="next">
+                            <svg width={8} height={14} viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L7 7L1 13" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </ButtonNext>
+                    </div>
+                </CarouselProvider>
                 </div>
             </div>
         </div>

@@ -34,17 +34,6 @@ const Home = () => {
                     </div>
 
                 </section>
-                {/* Section: Games Block */}
-                {/* <div className="flex">
-                    <div className="bg-red-500 p-4">
-                        Filter div
-                    </div> */}
-
-                {/* Games Bloc */}
-                {/* <div className="flex-auto p-2">
-                        <Games />
-                    </div>
-                </div> */}
                 <Filter />
             </div>
 

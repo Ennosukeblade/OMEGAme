@@ -1,90 +1,106 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link, Params, useParams } from "react-router-dom";
+import axios from "axios";
 interface IUser {
-  userId: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  avatar: string;
-  createdAt: string;
-  updatedAt: string;
-}
-interface IGameJam {
-  gameJamId: number;
-  userId: number;
-  creator: IUser;
-  title: string;
-  description: string;
-  image: string;
-  startDate: string;
-  endDate: string;
-  votingEndDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
-const OneGameJam = ({
-  gameJamId,
-  userId,
-  creator,
-  title,
-  description,
-  image,
-  startDate,
-  endDate,
-  votingEndDate,
-  createdAt,
-  updatedAt,
-}: IGameJam) => {
-  const formatStartDate = (startDate: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    const formattedDate = new Date(startDate).toLocaleDateString(
-      undefined,
-      options
-    );
-    return formattedDate;
-  };
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    avatar: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+  interface IGameJam {
+    gameJamId: number;
+    userId: number;
+    creator: IUser;
+    title: string;
+    description: string;
+    image: string;
+    startDate: string;
+    endDate: string;
+    votingEndDate: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+const OneGameJam = () => {
+    const { id } = useParams<Params<string>>();
+    const [oneGameJam, setOneGameJam] = useState<any>({});
+    useEffect(() => {
+        axios
+          .get("https://localhost:7223/api/GameJam/" + id)
+          .then((response) => {
+            console.log(response.data);
+            setOneGameJam(response.data);
+            
+          })
+          .catch((err) => console.log(err));
+      }, []);
+    return (
+    <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
+      <div className="pt-6">
+        <nav aria-label="Breadcrumb">
+          <ol
+            role="list"
+            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
+          >
+            <li className="text-sm">
+              
+                {oneGameJam.title}
+            </li>
+          </ol>
+        </nav>
 
-  return (
-    <div key={gameJamId} className="group relative">
-      <div className="flex items-start justify-around">
-        <div className=" min-h-80 aspect-h-1 aspect-w-1 w-20 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-20">
-          <img
-            src="https://i.pinimg.com/564x/dc/c9/9f/dcc99fc7e408573b86c8beb0cc817df4.jpg"
-            alt="Game Jam image"
-            className=" object-cover object-center h-20 w-20"
-          />
+        {/* Image gallery */}
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+          <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+            <img
+              src={oneGameJam.image}
+              alt="Game Jam image"
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
         </div>
-        <div>
-          <h2 className="text-xl font-bold text-violet-700">
-            <a href="#">
-              <span aria-hidden="true" className="absolute inset-0" />
-              {title}
-            </a>
-          </h2>
-          <h2 className="text-sm text-gray-700">
-            <a href="#">
-              <span aria-hidden="true" className="absolute inset-0" />
-              Hosted By: {creator.firstName} {creator.lastName}
-            </a>
-          </h2>
-          <p className="text-sm text-gray-700">
-            <span aria-hidden="true" className="absolute inset-0" />
-            {description}
-          </p>
+
+        {/* Product info */}
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+              {oneGameJam.title}
+            </h1>
+          </div>
+
+          {/* Options */}
+          <div className="mt-4 lg:row-span-3 lg:mt-0">
+            <h2 className="sr-only">Game information</h2>
+            
+
+            
+            <div className="mt-10">
+              <Link to={`/games/upload/${oneGameJam.gameJamId}`}>
+              <button
+                type="submit"
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Join Jam
+              </button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            {/* Description and details */}
+            <div>
+              <h3 className="sr-only">Description</h3>
+
+              <div className="space-y-6">
+                <p className="text-base text-gray-900">{oneGameJam.description}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <p className="text-sm text-gray-700">
-        <span aria-hidden="true" className="absolute inset-0" />
-        Start Date: {formatStartDate(startDate)}
-      </p>
-      {/* <div className="mt-4 flex justify-between">
-                  
-                  
-                </div> */}
     </div>
   );
 };
