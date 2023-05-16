@@ -3,4 +3,4 @@ bkp
 .vscode
 .git
 .gitignore
-./server/Migrations
+/server/Migrations
