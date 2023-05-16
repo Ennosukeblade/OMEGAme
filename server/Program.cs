@@ -41,6 +41,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthorization();
+// access to files outside the client
+app.UseStaticFiles();
 
 app.MapControllers();
 

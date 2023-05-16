@@ -2,7 +2,7 @@ import React from 'react'
 
 const Assets = () => {
     return (
-        <div className='min-h-screen'>Assets</div>
+        <div className=''>Assets</div>
     )
 }
 
