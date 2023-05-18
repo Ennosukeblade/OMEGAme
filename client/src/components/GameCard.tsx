@@ -35,7 +35,7 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
                 </Link>
               </h3>
             </div>
-            <p className="text-sm font-medium text-gray-900">{price}DT</p>
+            <p className="text-sm font-medium text-gray-900">{price !== 0 ? price + " " + "TND" : "Free"}</p>
 
           </div>
           <div className="flex items-center">

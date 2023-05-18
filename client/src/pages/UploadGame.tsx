@@ -1,56 +1,52 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Params, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-interface IGame {
-  UserId: number;
-  Title: string;
-  Genre: string;
-  Price: number;
-  Description: string;
-  isPlayable: boolean;
-  Path: string;
-  GameJamId: string ;
+const videoGameGenres = [
+  "Action",
+  "Adventure",
+  "Role-playing",
+  "Simulation",
+  "Strategy",
+  "Sports",
+  "Fighting",
+  "Shooter",
+  "Horror",
+  "Platformer",
+  "Puzzle",
+  "Racing",
+  "Music",
+  "Stealth",
+  "Party",
+  "Survival",
+  "Massively multiplayer online",
+];
+
+const Loading = () => {
+  return <p className="text-center">Uploading in progress...</p>
 }
-export const UploadGame = () => {
-  const videoGameGenres = [
-    "Action",
-    "Adventure",
-    "Role-playing",
-    "Simulation",
-    "Strategy",
-    "Sports",
-    "Fighting",
-    "Shooter",
-    "Horror",
-    "Platformer",
-    "Puzzle",
-    "Racing",
-    "Music",
-    "Stealth",
-    "Party",
-    "Survival",
-    "Massively multiplayer online",
-  ];
-  const { id } = useParams<Params<string>>();
-  const [game, setGame] = useState<any>({
-      UserId: 1,
-      Title: "",
-      Genre: "",
-      Price: 0,
-      Description: "",
-      isPlayable: false,
-      Path: "E:/OMEGAme/server/wwwroot",
-    });
-    useEffect(() => {
-      if (id != "0") {
-        console.log("anything here")
-        setGame({...game, GameJamId:id})
-      }
-    }, []);
-    
-  
 
+export const UploadGame = () => {
+
+  const { id } = useParams<Params<string>>();
+  const [cookies] = useCookies(['userId']);
+  const [game, setGame] = useState<any>({
+    UserId: cookies.userId,
+    Title: "",
+    Genre: "",
+    Price: 0,
+    Description: "",
+    isPlayable: false,
+    Path: "",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  useEffect(() => {
+    if (id != "0") {
+      console.log("anything here")
+      setGame({ ...game, GameJamId: id })
+    }
+  }, []);
 
   const [formData, setFormData] = useState<FormData | null>(null);
   const handleFileUpload = async (file: File) => {
@@ -66,20 +62,6 @@ export const UploadGame = () => {
     }
   };
 
-  // const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
-  // const handleImageUpload = async (file: File) => {
-
-  //     const imageData = new FormData();
-  //     imageData.append("file", file);
-  //     setFormDataImage(imageData);
-  // };
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = event.target.files;
-  //   if (files && files.length > 0) {
-  //     const file = files[0];
-  //     handleImageUpload(file);
-  //   }
-  // };
   const [images, setImages] = useState<File>(new File([], ""));
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -90,12 +72,12 @@ export const UploadGame = () => {
     e.preventDefault();
     const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
     setGame({ ...game, [name]: value });
-    
+
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    setIsLoading(true)
     try {
       // Step 1: Create the game
       const gameResponse = await axios.post(
@@ -142,6 +124,8 @@ export const UploadGame = () => {
     } catch (error) {
       console.log("❌ ERROR from server", error);
     }
+    setIsLoading(false)
+
   };
   return (
     <>
@@ -244,26 +228,6 @@ export const UploadGame = () => {
                     onChange={handleChange}
                   ></textarea>
                 </div>
-                {/* <div className="flex items-center space-x-4">
-                                        <div className="flex flex-col">
-                                            <label className="leading-loose">Start</label>
-                                            <div className="relative focus-within:text-gray-600 text-gray-400">
-                                                <input type="text" className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="25/02/2020" />
-                                                <div className="absolute left-3 top-2">
-                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <label className="leading-loose">End</label>
-                                            <div className="relative focus-within:text-gray-600 text-gray-400">
-                                                <input type="text" className="pr-4 pl-10 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="26/02/2020" />
-                                                <div className="absolute left-3 top-2">
-                                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
               </div>
               <div className="flex items-center space-x-4">
                 <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
@@ -283,16 +247,24 @@ export const UploadGame = () => {
                   </svg>{" "}
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
-                >
-                  Create
-                </button>
+
+                {isLoading ?
+                  <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none" disabled>
+                    <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                    </svg>
+                    Processing...
+                  </button>
+                  : <button
+                    type="submit"
+                    className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none"
+                  >
+                    Create
+                  </button>}
+
               </div>
-              {/* </div> */}
             </form>
           </div>
+
         </div>
       </div>
     </>

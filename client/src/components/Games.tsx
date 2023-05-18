@@ -11,13 +11,17 @@ import GameCard from './GameCard'
 //     Description: string
 //     genre: string
 // }
-const Games = () => {
+interface IGenreFilter {
+    genreFilter: string
+}
+const Games = ({ genreFilter }: IGenreFilter) => {
     const path: string = "../../../server/"
     const image: string = "https://localhost:7223/uploads/6/images/wp7471860.jpg"
 
     //const path: string = "D:\\coding dojo\\C# stack\\Final project\\OMEGAme\\server\\"
 
-    const [games, setGames] = useState<Array<any>>([])
+
+    let [games, setGames] = useState<Array<any>>([])
     useEffect(() => {
         const fetchGames = async () => {
 
@@ -30,6 +34,9 @@ const Games = () => {
         }
         fetchGames()
     }, [])
+    if (genreFilter !== "All") {
+        games = games.filter((game) => game.genre === genreFilter)
+    }
     // game.myImages.length !== 0 ? path + game.myImages[0].fileName.replace(/\\/g, '/') : "https://theperfectroundgolf.com/wp-content/uploads/2022/04/placeholder.png"
     //console.log(path + games[0].myImages[0])
     return (

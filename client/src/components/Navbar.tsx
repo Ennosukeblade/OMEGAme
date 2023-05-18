@@ -38,6 +38,7 @@ const NavBar = ({ userId, firstName, lastName }: cookiesType) => {
       removeCookie('firstName')
       removeCookie('lastName')
     }
+
   }
 
 
