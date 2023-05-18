@@ -31,7 +31,7 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Include(m => m.MyVotes).FirstOrDefaultAsync(c => c.UserId == id);
             if (user == null)
             {
                 return NotFound();
@@ -89,6 +89,8 @@ namespace server.Controllers
                     // Save
                     await _context.SaveChangesAsync();
                     return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
+
+
                 }
             }
             return BadRequest();

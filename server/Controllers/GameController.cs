@@ -78,7 +78,7 @@ namespace server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGameId(int id)
         {
-            Game? game = await _context.Games.Include(u => u.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).FirstOrDefaultAsync(u => u.GameId == id);
+            Game? game = await _context.Games.Include(u => u.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).Include(i=>i.InGameJam).Include(v=>v.GameVotes).FirstOrDefaultAsync(u => u.GameId == id);
             if (game == null)
             {
                 return NotFound();

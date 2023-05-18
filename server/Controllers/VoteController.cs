@@ -35,9 +35,10 @@ namespace server.Controllers
             return vote;
         }
         //* POST: api/Vote
-        [HttpPost]
+        [HttpPost()]
         public async Task<ActionResult<Vote>> CreateVote(Vote NewVote)
         {
+            // var NewVote = new Vote { GameId = int.Parse(gameId) , UserId = id };
             _context.Votes.Add(NewVote);
             await _context.SaveChangesAsync();
             return StatusCode(200,CreatedAtAction(nameof(Vote), new { id = NewVote.VoteId }, NewVote));

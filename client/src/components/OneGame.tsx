@@ -48,7 +48,9 @@ export default function OneGame() {
         console.log(response.data);
         setOneGame(response.data)
         setNewComment({
-          ...newComment, Content: ""
+          UserId: cookies.userId,
+          GameId: id,
+          Content: ""
         })
       })
       .catch(err => console.log(err))
