@@ -18,50 +18,38 @@ const subCategories = [
     { name: 'Hip Bags', href: '#' },
     { name: 'Laptop Sleeves', href: '#' },
 ]
-const filters = [
-    {
-        id: 'color',
-        name: 'Color',
-        options: [
-            { value: 'white', label: 'White', checked: false },
-            { value: 'beige', label: 'Beige', checked: false },
-            { value: 'blue', label: 'Blue', checked: true },
-            { value: 'brown', label: 'Brown', checked: false },
-            { value: 'green', label: 'Green', checked: false },
-            { value: 'purple', label: 'Purple', checked: false },
-        ],
-    },
-    {
-        id: 'category',
-        name: 'Category',
-        options: [
-            { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-            { value: 'sale', label: 'Sale', checked: false },
-            { value: 'travel', label: 'Travel', checked: true },
-            { value: 'organization', label: 'Organization', checked: false },
-            { value: 'accessories', label: 'Accessories', checked: false },
-        ],
-    },
-    {
-        id: 'size',
-        name: 'Size',
-        options: [
-            { value: '2l', label: '2L', checked: false },
-            { value: '6l', label: '6L', checked: false },
-            { value: '12l', label: '12L', checked: false },
-            { value: '18l', label: '18L', checked: false },
-            { value: '20l', label: '20L', checked: false },
-            { value: '40l', label: '40L', checked: true },
-        ],
-    },
-]
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
+
+const videoGameGenres = [
+    "All",
+    "Action",
+    "Adventure",
+    "Role-playing",
+    "Simulation",
+    "Strategy",
+    "Sports",
+    "Fighting",
+    "Shooter",
+    "Horror",
+    "Platformer",
+    "Puzzle",
+    "Racing",
+    "Music",
+    "Stealth",
+    "Party",
+    "Survival",
+    "Massively multiplayer online",
+];
+
 const Filter = () => {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-
+    const [genreFilter, setGenreFilter] = useState<string>("All")
+    /*     const changeGenre = (genre: string) => {
+            setGenreFilter(genre)
+        } */
     return (
         <div className="">
             <div>
@@ -116,7 +104,7 @@ const Filter = () => {
                                             ))}
                                         </ul>
 
-                                        {filters.map((section) => (
+                                        {/* {filters.map((section) => (
                                             <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
                                                 {({ open }) => (
                                                     <>
@@ -157,7 +145,7 @@ const Filter = () => {
                                                     </>
                                                 )}
                                             </Disclosure>
-                                        ))}
+                                        ))} */}
                                     </form>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -242,16 +230,16 @@ const Filter = () => {
                             {/* bg-green-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 border border-gray-100 */}
                             <form className="hidden lg:block sticky top-14 h-max pt-4 px-4 bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
                                 {/* <div className='h-full w-full bg-green-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 border border-gray-100'> */}
-                                <h3 className="sr-only">Categories</h3>
+                                <h3 className="sr-only">Genres</h3>
                                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                                    {subCategories.map((category) => (
-                                        <li key={category.name}>
-                                            <a href={category.href}>{category.name}</a>
+                                    {videoGameGenres.map((genre) => (
+                                        <li key={genre}>
+                                            <button onClick={(e) => { setGenreFilter(genre); e.preventDefault() }}>{genre}</button>
                                         </li>
                                     ))}
                                 </ul>
 
-                                {filters.map((section) => (
+                                {/* {filters.map((section) => (
                                     <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
                                         {({ open }) => (
                                             <>
@@ -292,13 +280,13 @@ const Filter = () => {
                                             </>
                                         )}
                                     </Disclosure>
-                                ))}
+                                ))} */}
                                 {/* </div> */}
                             </form>
 
                             {/* Games grid */}
                             <div className="lg:col-span-4">
-                                <Games />
+                                <Games genreFilter={genreFilter} />
                             </div>
                         </div>
                     </section>

@@ -24,14 +24,14 @@ namespace server.Controllers
             _hostingEnvironment = hostingEnvironment;
             _context = context;
             _logger = logger;
-            
+
         }
         [HttpGet("gameJam/games/{id}")]
         public async Task<ActionResult<Game>> GetGameJamGames(int id)
         {
-            List <Game> GameJamGames = await _context.Games.Include(c=>c.MyImages).Include(c=>c.Creator).Where(j=>j.GameJamId == id).ToListAsync();
-            
-            return StatusCode(200,GameJamGames);
+            List<Game> GameJamGames = await _context.Games.Include(c => c.MyImages).Include(c => c.Creator).Where(j => j.GameJamId == id).ToListAsync();
+
+            return StatusCode(200, GameJamGames);
         }
         //* POST: api/GameJam
         [HttpGet("download/{id}")]
@@ -39,7 +39,7 @@ namespace server.Controllers
         {
             Game? Game = _context.Games.FirstOrDefault(u => u.GameId == id);
             // Replace 'folderPath' with the actual path of your folder
-            string folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads",id.ToString());
+            string folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", id.ToString());
             string zipFileName = Game.Title + ".zip";
             string zipPath = Path.Combine(Path.GetTempPath(), "downloaded-folder.zip");
 
@@ -70,7 +70,7 @@ namespace server.Controllers
         [HttpGet]
         public async Task<ActionResult<Game>> GetAllGames()
         {
-            List<Game> AllGames = await _context.Games.Include(g => g.Creator).Include(i => i.MyImages).Where(g => g.GameJamId == null).ToListAsync();
+            List<Game> AllGames = await _context.Games.Include(g => g.Creator).Include(i => i.MyImages).Include(c => c.InGameComments).ThenInclude(u => u.User).Where(g => g.GameJamId == null).ToListAsync();
             return Ok(AllGames);
         }
 
@@ -94,6 +94,7 @@ namespace server.Controllers
             return StatusCode(200, CreatedAtAction(nameof(Game), new { id = NewGame.GameId }, NewGame));
         }
         //* POST: api/Game
+        [DisableRequestSizeLimit]
         [HttpPost("upload/{id}")]
         public async Task<IActionResult> UploadFile(IFormFile file, int id)
         {
@@ -119,13 +120,13 @@ namespace server.Controllers
             FileSystem.RenameDirectory(oldPath, folderName);
             System.Console.WriteLine(oldPath);
 
-             var hostUrl = $"{Request.Scheme}://{Request.Host.Value}";
+            var hostUrl = $"{Request.Scheme}://{Request.Host.Value}";
             //* Update Game
-            var newPath = Path.Combine(hostUrl,"uploads", folderName);
-            Directory.CreateDirectory(Path.Combine(extractionPath,id.ToString(), "images"));
+            var newPath = Path.Combine(hostUrl, "uploads", folderName);
+            Directory.CreateDirectory(Path.Combine(extractionPath, id.ToString(), "images"));
             newGame.Path = newPath;
             // Find the index.html file
-            var indexHtmlPath = Path.Combine(Path.Combine(extractionPath,id.ToString()), "index.html");
+            var indexHtmlPath = Path.Combine(Path.Combine(extractionPath, id.ToString()), "index.html");
             if (System.IO.File.Exists(indexHtmlPath))
 
             {

@@ -3,6 +3,7 @@ import logo from "../assets/icons/Logo.svg"
 import axios from 'axios'
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom'
 
 interface IUser {
     firstName: string
@@ -27,10 +28,10 @@ const Register = () => {
         const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
         setUser({ ...user, [name]: value });
     };
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setEmailError("")
-        axios.post("https://localhost:7223/api/user/register", user)
+        await axios.post("https://localhost:7223/api/user/register", user)
             .then(response => {
                 setErrors({})
                 console.log(response.data)
@@ -38,7 +39,7 @@ const Register = () => {
                 setCookie("userId", response.data.value.userId, { path: '/' })
                 setCookie("firstName", response.data.value.firstName, { path: '/' })
                 setCookie("lastName", response.data.value.lastName, { path: '/' })
-                nav("/")
+                nav('/')
             })
             .catch(error => {
                 if (error.response && error.response.data.status == 400) {
@@ -178,9 +179,9 @@ const Register = () => {
 
                         <p className="mt-10 text-center text-sm text-gray-500">
                             Already a member?{' '}
-                            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            <Link to={"/login"} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                                 Sign in
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>

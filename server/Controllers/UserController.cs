@@ -88,9 +88,6 @@ namespace server.Controllers
                     _context.Add(NewUser);
                     // Save
                     await _context.SaveChangesAsync();
-                    HttpContext.Session.SetInt32("userId", NewUser.UserId);
-                    return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
-
                     return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
                 }
             }
