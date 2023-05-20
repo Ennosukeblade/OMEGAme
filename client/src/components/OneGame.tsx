@@ -61,9 +61,8 @@ export default function OneGame() {
     day: "2-digit",
   });
   useEffect(() => {
-    axios
-      .get("https://localhost:7223/api/Game/" + id)
-      .then((response) => {
+    axios.get("https://localhost:7223/api/Game/" + id)
+      .then(response => {
         console.log(response.data);
         setOneGame(response.data);
         setNewComment({
@@ -75,9 +74,8 @@ export default function OneGame() {
       .catch((err) => console.log(err));
   }, [commentAdded]);
   useEffect(() => {
-    axios
-      .get("https://localhost:7223/api/User/" + cookies.userId)
-      .then((response) => {
+    axios.get("https://localhost:7223/api/Comment/" + id)
+      .then(response => {
         console.log(response.data);
         setUser(response.data);
         const votingEndDate = new Date(oneGame.inGameJam.votingEndDate);
@@ -162,6 +160,7 @@ export default function OneGame() {
   return (
     <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
       <div className="pt-6">
+
         {/* Image gallery */}
         <div className="mx-auto mt-6 max-w-2xl px-6 lg:max-w-7xl lg:px-8">
           <div className="overflow-hidden rounded-lg lg:block">
@@ -172,6 +171,7 @@ export default function OneGame() {
             />
           </div>
         </div>
+
 
         {/* Game info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
@@ -212,7 +212,7 @@ export default function OneGame() {
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:pb-16 lg:pr-8 lg:pt-6">
             {/* Description and details */}
-            <div className="flex flex-col gap-4">
+            <div className='flex flex-col gap-4'>
               <div className="flex items-center">
                 <img
                   className="w-10 h-10 rounded-full mr-4"
@@ -317,7 +317,7 @@ export default function OneGame() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </div >
+    </div >
+  )
 }
