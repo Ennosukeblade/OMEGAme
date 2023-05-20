@@ -51,8 +51,8 @@ const OneGameJam = ({
 
   return (
     <Link to={`/OneGameJam/${gameJamId}`}>
-    <div key={gameJamId} className="group relative">
-      <div className="flex items-start justify-around">
+    <div key={gameJamId} className="group relative flex flex-col gap-2 bg-white rounded-md p-2 bg-opacity-20 backdrop-filter backdrop-blur-lg">
+      <div className="flex items-start justify-around gap-3">
         <div className=" min-h-80 aspect-h-1 aspect-w-1 w-20 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-20">
           <img
             src={image}
@@ -73,10 +73,7 @@ const OneGameJam = ({
               Hosted By: {creator.firstName} {creator.lastName}
             </a>
           </h2>
-          <p className="text-sm text-gray-700">
-            <span aria-hidden="true" className="absolute inset-0" />
-            {description}
-          </p>
+         
         </div>
       </div>
       <p className="text-sm text-gray-700">

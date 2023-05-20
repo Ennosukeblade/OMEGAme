@@ -9,13 +9,15 @@ type gameCardTypes = {
   creator: string,
   date: string
   description: string
+  winner: boolean
 }
-const GameCard = ({ id, title, price, image, avatar, creator, date, description }: gameCardTypes) => {
+const GameCard = ({ id, title, price, image, avatar, creator, date, description, winner }: gameCardTypes) => {
   const mydate = new Date(date)
   const formatedDate = mydate.toLocaleDateString('en-US', { year: "numeric", month: "long", day: "2-digit" })
 
   return (
     <>
+    
       <div key={id} className="group relative bg-white rounded-md p-2 bg-opacity-20 backdrop-filter backdrop-blur-lg" >
         <div className="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-100">
           <img
@@ -38,6 +40,8 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
             <p className="text-sm font-medium text-gray-900">{price !== 0 ? price + " " + "TND" : "Free"}</p>
 
           </div>
+          
+          
           <div className="flex items-center">
             <img className="w-10 h-10 rounded-full mr-4" src={avatar} alt={avatar} />
             <div className="text-xs">
@@ -47,7 +51,7 @@ const GameCard = ({ id, title, price, image, avatar, creator, date, description 
           </div>
           <p className="text-sm truncate">{description}</p>
         </div>
-
+        {winner&& <p className='subpixel-antialiased text-green-400'>Winner of the Game Jam! </p>}
       </div >
     </>
 

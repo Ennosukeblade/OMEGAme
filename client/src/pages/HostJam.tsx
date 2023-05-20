@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // interface IUser {
 //   userId: number;
@@ -20,6 +21,7 @@ interface IGameJam {
   votingEndDate: Date;
 }
 const HostJam = () => {
+  const nav = useNavigate()
   const [gameJam, setGameJam] = useState<IGameJam>({
     userId: 1,
     title: "",
@@ -75,6 +77,7 @@ const HostJam = () => {
         );
         if (imageUploadResponse.status === 200) {
           console.log("Image uploaded successfully", imageUploadResponse.data);
+          nav("/gamejams")
         }
 
         // *Make another POST request here for images
