@@ -29,7 +29,7 @@ namespace server.Controllers
         [HttpGet("gameJam/games/{id}")]
         public async Task<ActionResult<Game>> GetGameJamGames(int id)
         {
-            List<Game> GameJamGames = await _context.Games.Include(c => c.MyImages).Include(c => c.Creator).Where(j => j.GameJamId == id).ToListAsync();
+            List<Game> GameJamGames = await _context.Games.Include(c => c.MyImages).Include(c => c.Creator).Include(v=>v.GameVotes).Where(j => j.GameJamId == id).ToListAsync();
 
             return StatusCode(200, GameJamGames);
         }

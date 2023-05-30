@@ -25,8 +25,8 @@ const Home = () => {
                                         Are you ready <br /><span>for an adventure</span>
                                     </h2>
                                     <p className="text-lg">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima officia
-                                        consequatur adipisci tenetur repudiandae rerum quos.
+                                        Welcome To our OMEGAme world, where you can play download and even upload your own games.
+                                        Hey Game devs It's your Time to shine.
                                     </p>
                                 </div>
                             </div>

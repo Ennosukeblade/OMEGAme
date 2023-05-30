@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
-import { Params, useParams } from "react-router-dom";
+import { Params, useParams, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const videoGameGenres = [
@@ -28,6 +28,7 @@ const Loading = () => {
 }
 
 export const UploadGame = () => {
+  const nav = useNavigate()
 
   const { id } = useParams<Params<string>>();
   const [cookies] = useCookies(['userId']);
@@ -125,6 +126,7 @@ export const UploadGame = () => {
       console.log("❌ ERROR from server", error);
     }
     setIsLoading(false)
+    nav("/")
 
   };
   return (

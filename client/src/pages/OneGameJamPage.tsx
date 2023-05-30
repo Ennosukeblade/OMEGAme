@@ -2,7 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link, Params, useParams } from "react-router-dom";
 import axios from "axios";
 import GameCard from "../components/GameCard";
+import { forEachChild } from "typescript";
+interface IVote {
+  VoteId: number;
+  GameId: number;
+  userId: number;
+}
+interface IGame {
+  gameId: number;
+  title:string
+  description:string
+  gameVotes: any[]
 
+}
 const OneGameJamPage = () => {
   const { id } = useParams<Params<string>>();
   const [oneGameJam, setOneGameJam] = useState<any>({});
@@ -16,6 +28,7 @@ const OneGameJamPage = () => {
     const startDate = new Date(oneGameJam.startDate);
     const endDate = new Date(oneGameJam.endDate);
     const voteEndDate = new Date(oneGameJam.votingEndDate);
+    
     if (
       currentDate > startDate &&
       currentDate < endDate &&
@@ -27,8 +40,7 @@ const OneGameJamPage = () => {
     }
     if (
       currentDate > startDate &&
-      currentDate > endDate &&
-      currentDate < voteEndDate
+      currentDate > endDate 
     ) {
       setCanFetch(true);
     } else {
@@ -49,14 +61,29 @@ const OneGameJamPage = () => {
     axios
       .get("https://localhost:7223/api/Game/gameJam/games/" + id)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data,"gameeesss");
         setGames(response.data);
       })
       .catch((err) => console.log(err));
   }, []);
+  const [winnerGameId, setWinnerGameID] = useState<number | null>(null);
 
+  useEffect(() => {
+    let gameIdWithMaxVotes: number | null = null;
+    let maxVotesLength = 0;
+
+    for (let i = 0; i < games.length; i++) {
+      const currentGame = games[i];
+      if (currentGame.gameVotes.length > maxVotesLength) {
+        gameIdWithMaxVotes = currentGame.gameId; // Store the index of the game instead of the game object itself
+        maxVotesLength = currentGame.gameVotes.length;
+      }
+    }
+    console.log(gameIdWithMaxVotes)
+    setWinnerGameID(gameIdWithMaxVotes);
+  }, [games]); // Run the effect only once, on component mount
   return (
-    <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
+    <div className="h-screen bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol
@@ -79,7 +106,7 @@ const OneGameJamPage = () => {
         </div>
 
         {/* Product info */}
-        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-10 lg:pt-16">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               {oneGameJam.title}
@@ -108,7 +135,7 @@ const OneGameJamPage = () => {
             )}
           </div>
 
-          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+          <div className="lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8">
             {/* Description and details */}
             <div>
               <h3 className="sr-only">Description</h3>
@@ -129,6 +156,19 @@ const OneGameJamPage = () => {
               // console.log(path + game.myImages[0].fileName.replace(/\\/g, '/'))
               return (
                 <div key={game.gameId}>
+                  {winnerGameId == game.gameId? <GameCard
+                    id={game.gameId}
+                    title={game.title}
+                    price={game.price}
+                    image={game.myImages[0].fileName}
+                    creator={
+                      game.creator.firstName + " " + game.creator.lastName
+                    }
+                    avatar="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT93ATNDzBpB63bYDVaL_DL4UXpH_5t0CBZ-UBFrMLfdvLbczdV"
+                    date={game.createdAt}
+                    description={game.description}
+                    winner = {true}
+                  />:
                   <GameCard
                     id={game.gameId}
                     title={game.title}
@@ -140,8 +180,11 @@ const OneGameJamPage = () => {
                     avatar="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT93ATNDzBpB63bYDVaL_DL4UXpH_5t0CBZ-UBFrMLfdvLbczdV"
                     date={game.createdAt}
                     description={game.description}
+                    winner = {false}
                   />
 
+}
+                  
                   {/* <p>{path + game.myImages[0].fileName.replace(/\\/g, '/')}</p> */}
                   {/* <img src={require("../../../server/wwwroot/uploads/20/images/image.png")} alt="" /> */}
                 </div>

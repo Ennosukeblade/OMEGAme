@@ -155,7 +155,7 @@ const Filter = () => {
 
                 <main className="mx-auto max-w-7xl sm:px-6 lg:px-8 pt-4">
                     <div className="flex items-center justify-between pb-2 pt-2 sticky top-0 bg-white z-10 px-3 bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900">Last Uploads</h1>
 
                         <div className="flex items-center">
                             <Menu as="div" className="relative inline-block text-left">

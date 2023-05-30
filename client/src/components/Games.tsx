@@ -56,6 +56,7 @@ const Games = ({ genreFilter }: IGenreFilter) => {
                             avatar={`https://ui-avatars.com/api/?background=ae369e&color=fff&name=${game.creator.firstName}+${game.creator.lastName}`}
                             date={game.createdAt}
                             description={game.description}
+                            winner={false}
                         />
 
                         {/* <p>{path + game.myImages[0].fileName.replace(/\\/g, '/')}</p> */}
