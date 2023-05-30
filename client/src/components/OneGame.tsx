@@ -38,7 +38,7 @@ export default function OneGame() {
 
   const fdate = (date: string) => {
     const fDate = new Date(date)
-    const formatedDate = fDate.toLocaleDateString('en-US', { year: "numeric", month: "long", day: "2-digit" })
+    const formatedDate = fDate.toLocaleDateString('en-US', { year: "numeric", month: "long", day: "2-digit", hour: "2-digit", minute: "2-digit" })
     return formatedDate
   }
 
