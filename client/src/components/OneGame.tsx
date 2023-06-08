@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Params, useParams,useNavigate } from "react-router-dom";
+import { Params, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 interface IUser {
@@ -27,7 +27,7 @@ interface IVote {
 export default function OneGame() {
   const nav = useNavigate()
   const currentDate = new Date();
-  const [NowDate, setNowDate] = useState<Date >(currentDate);
+  const [NowDate, setNowDate] = useState<Date>(currentDate);
   const { id } = useParams<Params<string>>();
   const [oneGame, setOneGame] = useState<any>({ gameId: 0 });
   const [user, setUser] = useState<any>({ myVotes: [], gameId: 0 });
@@ -44,14 +44,14 @@ export default function OneGame() {
   const [commentAdded, setcommentAdded] = useState<number>(0);
   const fdate = (date: string) => {
     const fDate = new Date(date);
-    const formatedDate = fDate.toLocaleDateString('en-US', 
-    { 
-      year: "numeric", 
-      month: "long", 
-      day: "2-digit", 
-      hour: "2-digit", 
-      minute: "2-digit" 
-    })
+    const formatedDate = fDate.toLocaleDateString('en-US',
+      {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     return formatedDate;
   };
   console.log(cookies.userId);
@@ -83,7 +83,7 @@ export default function OneGame() {
       })
       .catch((err) => console.log(err));
   }, [oneGame, voted]);
-  const [voteEndDate, setVoteEndDate] = useState<Date >(currentDate);
+  const [voteEndDate, setVoteEndDate] = useState<Date>(currentDate);
 
   useEffect(() => {
     if (Array.isArray(oneGame.gameVotes)) {
@@ -106,17 +106,16 @@ export default function OneGame() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(cookies.userId)
-    if(cookies.userId == null)
-    {
+    if (cookies.userId == null) {
       nav("/login")
     }
-    else{
+    else {
       axios
-      .post("https://localhost:7223/api/Comment/", newComment)
-      .then((response) => setcommentAdded(commentAdded + 1))
-      .catch((error) => console.log(error));
+        .post("https://localhost:7223/api/Comment/", newComment)
+        .then((response) => setcommentAdded(commentAdded + 1))
+        .catch((error) => console.log(error));
     }
-    
+
   };
 
   const handleChange = (e: ChangeEvent) => {
@@ -245,10 +244,10 @@ export default function OneGame() {
                 ></iframe>
               </div>
             )}
-            
-            {oneGame.gameJamId != null && voteEndDate>NowDate ? (
+
+            {oneGame.gameJamId != null && voteEndDate > NowDate ? (
               user.myVotes.length == 0 ||
-              user.myVotes[0].gameId == oneGame.gameId ? (
+                user.myVotes[0].gameId == oneGame.gameId ? (
                 voted ? (
                   <div className="mt-8">
                     <button
