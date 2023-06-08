@@ -3,8 +3,15 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using server.Models;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
@@ -50,13 +57,26 @@ app.UseDefaultFiles();
 
 var provider = new FileExtensionContentTypeProvider();
 provider.Mappings[".data"] = "application/octet-stream";
-
+provider.Mappings[".br"] = "application/brotli";
+provider.Mappings[".wasm"] = "application/wasm";
+app.UseResponseCompression();
 app.UseStaticFiles(new StaticFileOptions
 {
     ContentTypeProvider = provider,
     ServeUnknownFileTypes = true,
-    DefaultContentType = "application/octet-stream",
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+     OnPrepareResponse = ctx =>
+    {
+        var fileExtension = Path.GetExtension(ctx.File.Name);
+        if (fileExtension == ".br")
+        {
+            ctx.Context.Response.Headers.Append("Content-Encoding", "br");
+        }
+        else if (fileExtension == ".wasm" && ctx.Context.Response.ContentType == "application/octet-stream")
+        {
+            ctx.Context.Response.ContentType = "application/wasm";
+        }
+    }
 });
 app.MapControllers();
 app.Run();
