@@ -1,16 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// interface IUser {
-//   userId: number;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   avatar: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
+import { useCookies } from "react-cookie";
 interface IGameJam {
   userId: number;
   title: string;
@@ -21,9 +12,10 @@ interface IGameJam {
   votingEndDate: Date;
 }
 const HostJam = () => {
+  const [cookies] = useCookies(['userId', 'firstName', 'lastName']);
   const nav = useNavigate()
   const [gameJam, setGameJam] = useState<IGameJam>({
-    userId: 1,
+    userId: cookies.userId,
     title: "",
     description: "",
     image: "",
@@ -96,10 +88,10 @@ const HostJam = () => {
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
               <div className="flex items-center space-x-5">
                 <div className="h-14 w-14 bg-yellow-200 rounded-full flex flex-shrink-0 justify-center items-center text-yellow-500 text-2xl font-mono">
-                  i
+                  G
                 </div>
                 <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
-                  <h2 className="leading-relaxed">Upload a Game</h2>
+                  <h2 className="leading-relaxed">Host a Jam</h2>
                   <p className="text-sm text-gray-500 font-normal leading-relaxed">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   </p>

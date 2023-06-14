@@ -72,7 +72,7 @@ const GameJams = () => {
                 <div className="flex items-start justify-between">
                     <p className="text-neutral-900 w-2/3">
                     Game jams are time-limited events where developers collaborate to
-                    create games.Join to prototype ideas, showcase skills, and be part
+                    create games. Join to prototype ideas, showcase skills, and be part
                     of a vibrant community.
                     </p>
                     <Link to={"/HostJam"}>

@@ -23,6 +23,7 @@ const OneGameJamPage = () => {
   const currentDate = new Date();
   const [canUpload, setCanUpload] = useState<boolean>(false);
   const [canFetch, setCanFetch] = useState<boolean>(false);
+  const [descriptionAppearence, setDescriptionAppearence] = useState<boolean>(false);
 
   useEffect(() => {
     const startDate = new Date(oneGameJam.startDate);
@@ -37,6 +38,9 @@ const OneGameJamPage = () => {
       setCanUpload(true);
     } else {
       setCanUpload(false);
+    }
+    if (currentDate > startDate) {
+      setDescriptionAppearence(true)
     }
     if (
       currentDate > startDate &&
@@ -134,8 +138,7 @@ const OneGameJamPage = () => {
               </p>
             )}
           </div>
-
-          <div className="lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8">
+              {descriptionAppearence&& <div className="lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8">
             {/* Description and details */}
             <div>
               <h3 className="sr-only">Description</h3>
@@ -146,7 +149,8 @@ const OneGameJamPage = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div>}
+         
         </div>
         {canFetch?<div className="mx-auto max-w-2xl p-4 sm:px-4 lg:max-w-7xl lg:p-4 bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg rounded-md">
           {/* <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2> */}

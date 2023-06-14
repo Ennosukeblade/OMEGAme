@@ -25,7 +25,7 @@ interface IVote {
 }
 
 export default function OneGame() {
-  const nav = useNavigate()
+  const nav = useNavigate();
   const currentDate = new Date();
   const [NowDate, setNowDate] = useState<Date>(currentDate);
   const { id } = useParams<Params<string>>();
@@ -44,14 +44,13 @@ export default function OneGame() {
   const [commentAdded, setcommentAdded] = useState<number>(0);
   const fdate = (date: string) => {
     const fDate = new Date(date);
-    const formatedDate = fDate.toLocaleDateString('en-US',
-      {
-        year: "numeric",
-        month: "long",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      })
+    const formatedDate = fDate.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
     return formatedDate;
   };
   console.log(cookies.userId);
@@ -61,8 +60,9 @@ export default function OneGame() {
     day: "2-digit",
   });
   useEffect(() => {
-    axios.get("https://localhost:7223/api/Game/" + id)
-      .then(response => {
+    axios
+      .get("https://localhost:7223/api/Game/" + id)
+      .then((response) => {
         console.log(response.data);
         setOneGame(response.data);
         setNewComment({
@@ -74,8 +74,9 @@ export default function OneGame() {
       .catch((err) => console.log(err));
   }, [commentAdded]);
   useEffect(() => {
-    axios.get("https://localhost:7223/api/Comment/" + id)
-      .then(response => {
+    axios
+      .get("https://localhost:7223/api/Comment/" + id)
+      .then((response) => {
         console.log(response.data);
         setUser(response.data);
         const votingEndDate = new Date(oneGame.inGameJam.votingEndDate);
@@ -105,17 +106,15 @@ export default function OneGame() {
   }, [oneGame]);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(cookies.userId)
+    console.log(cookies.userId);
     if (cookies.userId == null) {
-      nav("/login")
-    }
-    else {
+      nav("/login");
+    } else {
       axios
         .post("https://localhost:7223/api/Comment/", newComment)
         .then((response) => setcommentAdded(commentAdded + 1))
         .catch((error) => console.log(error));
     }
-
   };
 
   const handleChange = (e: ChangeEvent) => {
@@ -159,7 +158,6 @@ export default function OneGame() {
   return (
     <div className="bg-white bg-opacity-60 backdrop-filter backdrop-blur-lg">
       <div className="pt-6">
-
         {/* Image gallery */}
         <div className="mx-auto mt-6 max-w-2xl px-6 lg:max-w-7xl lg:px-8">
           <div className="overflow-hidden rounded-lg lg:block">
@@ -170,7 +168,6 @@ export default function OneGame() {
             />
           </div>
         </div>
-
 
         {/* Game info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
@@ -187,16 +184,28 @@ export default function OneGame() {
             <p className="text-3xl tracking-tight text-gray-900">
               {oneGame.price !== 0 ? oneGame.price + " " + "TND" : "Free"}
             </p>
+            {oneGame.price > 0 ? (
+              <form className="mt-10">
+                <button
+                  onClick={handleDownload}
+                  type="submit"
+                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  Buy
+                </button>
+              </form>
+            ) : (
+              <form className="mt-10">
+                <button
+                  onClick={handleDownload}
+                  type="submit"
+                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  Download
+                </button>
+              </form>
+            )}
 
-            <form className="mt-10">
-              <button
-                onClick={handleDownload}
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Download
-              </button>
-            </form>
             {oneGame.isPlayable && (
               <div className="mt-5">
                 <button
@@ -211,7 +220,7 @@ export default function OneGame() {
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:pb-16 lg:pr-8 lg:pt-6">
             {/* Description and details */}
-            <div className='flex flex-col gap-4'>
+            <div className="flex flex-col gap-4">
               <div className="flex items-center">
                 <img
                   className="w-10 h-10 rounded-full mr-4"
@@ -247,7 +256,7 @@ export default function OneGame() {
 
             {oneGame.gameJamId != null && voteEndDate > NowDate ? (
               user.myVotes.length == 0 ||
-                user.myVotes[0].gameId == oneGame.gameId ? (
+              user.myVotes[0].gameId == oneGame.gameId ? (
                 voted ? (
                   <div className="mt-8">
                     <button
@@ -316,7 +325,7 @@ export default function OneGame() {
             </div>
           </div>
         </div>
-      </div >
-    </div >
-  )
+      </div>
+    </div>
+  );
 }

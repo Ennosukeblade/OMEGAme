@@ -65,16 +65,16 @@ app.UseStaticFiles(new StaticFileOptions
     ContentTypeProvider = provider,
     ServeUnknownFileTypes = true,
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
-     OnPrepareResponse = ctx =>
+    OnPrepareResponse = ctx =>
     {
         var fileExtension = Path.GetExtension(ctx.File.Name);
         if (fileExtension == ".br")
         {
             ctx.Context.Response.Headers.Append("Content-Encoding", "br");
         }
-        else if (fileExtension == ".wasm" && ctx.Context.Response.ContentType == "application/octet-stream")
+        else if (fileExtension == ".wasm")
         {
-            ctx.Context.Response.ContentType = "application/wasm";
+            ctx.Context.Response.Headers.Append("Content-Type", "application/wasm");
         }
     }
 });

@@ -40,7 +40,11 @@ function App() {
             <Route path='/register' element={<Register />} />
             {/* <Route path='/OneGameJam/:id' element={<OneGameJam />} /> */}
             <Route path='/OneGameJam/:id' element={<OneGameJamPage />} />
-            <Route path='/HostJam' element={<HostJam />} />
+            {cookies.userId
+              ? <Route path='/HostJam' element={<HostJam />} />
+              : <Route path='/HostJam' element={<Login />} />
+            }
+            
           </Routes>
         </ScrollToTopNavigator>
 
