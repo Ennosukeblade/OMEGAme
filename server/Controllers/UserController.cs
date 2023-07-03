@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using server.Models;
+using System.Security.Claims;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace server.Controllers
 {
@@ -88,27 +89,41 @@ namespace server.Controllers
                     _context.Add(NewUser);
                     // Save
                     await _context.SaveChangesAsync();
-                    return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
+                    // Generate JWT token
+                    var tokenHandler = new JwtSecurityTokenHandler();
 
+                    // Manually specify the secret key
+                    var key = Encoding.ASCII.GetBytes("mouadhandoussemaprojectbechykasserdenya123"); // Replace "your_secret_key" with your desired key
 
+                    try
+                    {
+                        var tokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new[]
+                            {
+                new Claim("userId", NewUser.UserId.ToString()),
+                new Claim("email", NewUser.Email),
+                // Add additional claims as needed
+            }),
+                            Expires = DateTime.UtcNow.AddDays(7), // Set the token expiration time
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                        };
+
+                        var token = tokenHandler.CreateToken(tokenDescriptor);
+                        var encryptedToken = tokenHandler.WriteToken(token);
+
+                        return Ok(new { token = encryptedToken });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle token generation exception
+                        return BadRequest("Failed to generate JWT token: " + ex.Message);
+                    }
+                    // return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
                 }
+
             }
             return BadRequest();
         }
-        //* POST: api/User/Register
-        // [HttpPost("join/jam/{id}/{jamId}")]
-        // public async Task<ActionResult<User>> JoinJam(int id, int jamId)
-        // {
-
-        //     User? currentUser = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==id);
-        //     // Add
-        //     currentUser.Gam
-        //     // Save
-        //     await _context.SaveChangesAsync();
-        //     HttpContext.Session.SetInt32("userId", NewUser.UserId);
-        //     return StatusCode(200, CreatedAtAction(nameof(User), new { id = NewUser.UserId }, NewUser));
-
-        // }
-
     }
 }
